@@ -1,4 +1,6 @@
 require 'rspec'
-require 'gamma/lang/version'
+require 'gamma/lang'
 
 include Gamma::Lang
+
+require 'pry'

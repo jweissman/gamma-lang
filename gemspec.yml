@@ -1,6 +1,6 @@
 name: gamma-lang
-summary: "TODO: Summary"
-description: "TODO: Description"
+summary: "gamma"
+description: "language core"
 license: MIT
 authors: Joseph Weissman
 email: jweissman1986@gmail.com
