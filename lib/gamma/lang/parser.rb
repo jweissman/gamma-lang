@@ -9,27 +9,31 @@ module Gamma
       end
     end
 
-    def wrap_match(&block)
-      begin
-        Match[block.call]
-      rescue Parslet::ParseFailed => ex
-        Match[nil, ex]
+    module MatchWrapping
+      def wrap_match(&block)
+        begin
+          Match[block.call]
+        rescue Parslet::ParseFailed => ex
+          Match[nil, ex]
+        end
       end
     end
 
     class PartMatcher < Struct.new(:grammar, :part_sym)
+      include MatchWrapping
       def parse(str)
         wrap_match do
           grammar.send(part_sym).parse(str)
         end
       end
 
-      def parse?(str)
-        parse(str).successful?
-      end
+      # def parse?(str)
+      #   parse(str).successful?
+      # end
     end
 
     class Parser
+      include MatchWrapping
       def parse(str)
         wrap_match { grammar.parse(str) }
       end

@@ -1,21 +1,13 @@
 require 'parslet'
+require_relative 'vm'
 require_relative 'lang/grammar'
 require_relative 'lang/parser'
-require_relative 'vm'
+require_relative 'lang/transform'
+require_relative 'lang/interpreter'
+require_relative 'lang/version'
 
 module Gamma
   module Lang
-    class Interpreter
-      def evaluate(inp)
-        inp
-        # parse commands and hand to vm?
-      end
-    end
-    
-    # module Internals
-    # class Parser; end
-    # class Transform; end
-    # module AST; end
-    # end
+    # ...singletons??
   end
 end

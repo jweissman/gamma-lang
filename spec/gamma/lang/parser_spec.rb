@@ -1,11 +1,6 @@
 require 'pry'
 require 'spec_helper'
 
-RSpec::Matchers.define :parse do |test_string|
-  match do |parser|
-    expect(parser.parse(test_string)).to be_successful
-  end
-end
 
 describe Parser do
   let(:parser) { described_class.new }
@@ -73,6 +68,7 @@ describe Parser do
   describe 'parsing equations' do
     it 'parses 1+2*3' do
       expect(subject).to parse '1+2*3'
+      p subject.parse('1+2*3')
     end
   end
 end

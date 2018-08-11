@@ -4,21 +4,43 @@ require 'gamma/lang'
 
 module Gamma
   class CLI
-    PROMPT = ' > '
-    REPLY  = ' -> '
+    def interact!
+      greet!
+      readline(
+        interpret: ->(inp) { Lang.evaluate(inp) }
+      )
+      farewell!
+    end
+
+    protected
 
     def greet!
       puts
       puts "  Interactive Gamma Interpreter (iggy)"
       puts
+      puts "  welcome!!"
     end
 
-    def interact!
-      greet!
-      interpreter = Gamma::Lang::Interpreter.new
-      while buf = Readline.readline("> ", true)
-        rsp = interpreter.evaluate(buf)
-        print("-> ", rsp, "\n")
+    def farewell
+      puts
+      puts "   Have a good day!!"
+      puts
+    end
+
+    def prompt
+      'iggy> '
+    end
+
+    def reply_prefix
+      ' -> '
+    end
+
+    private
+
+    def readline(interpret:)
+      while buf = Readline.readline(prompt, true)
+        rsp = interpret.call(buf)
+        print(reply_prefix, rsp, "\n")
       end
     end
   end

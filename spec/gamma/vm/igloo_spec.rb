@@ -5,7 +5,7 @@ include Gamma::VM::BuiltinTypes
 
 describe Igloo do
   let(:igloo) { described_class.new }
-  let(:vm) { igloo.manager }
+  let(:vm)    { igloo.manager }
 
   it 'should store a value' do
     expect(
@@ -32,5 +32,23 @@ describe Igloo do
       "a is now 3"
     ])
     expect(vm.retrieve('a')).to eq(Result[Int[3], "a is 3"])
+  end
+
+  it 'should add integers' do
+    expect(
+      vm.add_integers(Int[2], Int[3])
+    ).to eq(Result[
+      Int[5],
+      "2 + 3 = 5"
+    ])
+  end
+
+  it 'should multiply integers' do
+    expect(
+      vm.multiply_integers(Int[5], Int[6])
+    ).to eq(Result[
+      Int[30],
+      "5 * 6 = 30"
+    ])
   end
 end

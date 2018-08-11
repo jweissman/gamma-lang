@@ -1,6 +1,3 @@
 require 'rspec'
-require 'gamma/lang'
-
-include Gamma::Lang
-
 require 'pry'
+require_relative 'support/custom_matchers'

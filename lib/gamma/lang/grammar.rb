@@ -31,7 +31,7 @@ module Gamma
 
       rule(:value)    { integer }
 
-      rule(:integer)  { digit.repeat(1).as(:int) }
+      rule(:integer)  { digit.repeat(1).as(:i) }
 
 
       #

@@ -10,17 +10,26 @@ module Gamma
       Int = Struct.new(:value) do
         def to_s; value.to_s end
       end
+
       # Double = Struct.new(:value)
     end
 
     class Command < Struct.new(:payload); end
+
     module Commands
-      class StoreDictionaryKey < Command; end
-      class RetrieveDictionaryKey < Command; end
-      class IncrementDictionaryKey < Command; end
+      # class StoreDictionaryKey < Command; end
+      # class RetrieveDictionaryKey < Command; end
+      # class IncrementDictionaryKey < Command; end
+
+      class PutAnonymousRegister < Command; end
+      class AddInts < Command; end
+      class MultiplyInts < Command; end
     end
-    # class Machine; end
+
     class Result < Struct.new(:ret_value, :message)
+      def inspect
+        "#{ret_value} # => #{message}"
+      end
     end
 
     class Store < Struct.new(:entries)
@@ -37,27 +46,48 @@ module Gamma
     class API < Struct.new(:machine)
       include Commands
 
-      def retrieve(key)
-        run(
-          get_command(key)
-        )
+      def put_anonymous(val)
+        put_anonymous_register(val)
       end
 
-      def store(key, value)
-        run(
-          set_command(key, value)
-        )
+      def put_anonymous!(val)
+        run(put_anonymous_register(val))
       end
 
-      def increment(key)
-        run(
-          inc_command(key)
-        )
+      # def retrieve(key)
+      #   get_command(key)
+      # end
+
+      # def retrieve!(key)
+      #   run()
+      # end
+
+      # def store(key, value)
+      #   run(set_command(key, value))
+      # end
+
+      # def increment(key)
+      #   run(inc_command(key))
+      # end
+
+      def add_integers(l, r)
+        run(add_ints_command(l, r))
+      end
+
+      def multiply_integers(l, r)
+        run(multiply_ints_command(l, r))
+      end
+
+      def run(cmd)
+        begin
+          run!(cmd)
+        # rescue VM::Error
+        end
       end
 
       protected
 
-      def run(cmd)
+      def run!(cmd)
         machine.handle(cmd)
       end
 
@@ -73,6 +103,18 @@ module Gamma
 
       def inc_command(key)
         IncrementDictionaryKey[[key]]
+      end
+
+      def add_ints_command(left, right)
+        AddInts[[left, right]]
+      end
+
+      def multiply_ints_command(left, right)
+        MultiplyInts[[left, right]]
+      end
+
+      def put_anonymous_register(value)
+        PutAnonymousRegister[[value]]
       end
     end
 
@@ -97,8 +139,19 @@ module Gamma
     # interactive gamma language object oriented [environment]
     class Igloo < Machine
       protected
+      # Magic Register Keys
+      ANON_REG_KEY = '_'
+
+      # Messages
       GET_MSG = ->(k,v) { "#{k} is #{v}" }
       SET_MSG = ->(k,v) { "#{k} is now #{v}" }
+
+
+
+      def put_anonymous_register(val)
+        store_dictionary_key(ANON_REG_KEY, val)
+        # store.set({ key: ANON_REG_KEY, value: val })
+      end
 
       def retrieve_dictionary_key(key)
         val = store.get({ key: key })
@@ -107,15 +160,23 @@ module Gamma
 
       def store_dictionary_key(key, val)
         store.set({ key: key, value: val })
-        # "#{key} is set to #{val.to_s}"]
         Result[val, SET_MSG[key, val.to_s]]
       end
 
       def increment_dictionary_key(key)
-        # assume builtin int
         int = store.get({ key: key })
         raise "Can't increment a non-Int" unless int.is_a?(Int)
         store_dictionary_key(key, Int[int.value + 1])
+      end
+
+      def add_ints(left, right)
+        sum = left.value + right.value
+        Result[Int[sum], "#{left} + #{right} = #{sum}"]
+      end
+
+      def multiply_ints(left, right)
+        product = left.value * right.value
+        Result[Int[product], "#{left} * #{right} = #{product}"]
       end
 
       private
