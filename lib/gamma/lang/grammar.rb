@@ -1,3 +1,5 @@
+require 'parslet'
+
 module Gamma
   module Lang
     class Grammar < Parslet::Parser
@@ -26,12 +28,12 @@ module Gamma
       # grammar parts
       #
 
-      rule(:add_op)   { match['+-'].as(:op) }
-      rule(:mult_op)  { match['*/'].as(:op) }
+      rule(:add_op)   { match['+-'].as(:op) >> space? }
+      rule(:mult_op)  { match['*/'].as(:op) >> space? }
 
       rule(:value)    { integer }
 
-      rule(:integer)  { digit.repeat(1).as(:i) }
+      rule(:integer)  { digit.repeat(1).as(:i) >> space? }
 
 
       #

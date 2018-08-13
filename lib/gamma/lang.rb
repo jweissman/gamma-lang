@@ -8,6 +8,16 @@ require_relative 'lang/version'
 
 module Gamma
   module Lang
-    # ...singletons??
+    class << self
+      def evaluate(str)
+        interpreter.evaluate(str)
+      end
+
+      private
+
+      def interpreter
+        @interpreter ||= Interpreter.new
+      end
+    end
   end
 end

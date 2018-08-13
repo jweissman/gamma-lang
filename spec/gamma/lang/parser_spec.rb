@@ -1,8 +1,7 @@
-require 'pry'
 require 'spec_helper'
+require 'gamma/lang/parser'
 
-
-describe Parser do
+describe Gamma::Lang::Parser do
   let(:parser) { described_class.new }
 
   # parts of speech

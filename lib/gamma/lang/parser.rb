@@ -1,3 +1,5 @@
+require_relative 'grammar'
+
 module Gamma
   # parsing in gamma is a lightweight wrapper
   # around parslet grammar, providing a match
@@ -6,6 +8,11 @@ module Gamma
     Match = Struct.new(:match, :error) do
       def successful?
         error.nil?
+      end
+
+      def inspect
+        error.nil? ? "MatchSucceeded[#{match}]"
+        : "MatchFailed[#{error}]"
       end
     end
 

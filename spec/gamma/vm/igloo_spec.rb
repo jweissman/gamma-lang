@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'gamma/vm'
 
 include Gamma::VM
 include Gamma::VM::BuiltinTypes
@@ -7,47 +8,58 @@ describe Igloo do
   let(:igloo) { described_class.new }
   let(:vm)    { igloo.manager }
 
+  def rc(cmd); vm.run(cmd) end
+
   it 'should store a value' do
     expect(
-      vm.store('a', Int[12345])
+      vm.run(
+        vm.store('a', GInt[12345])
+      )
     ).to eq(Result[
-      Int[12345],
+      GInt[12345],
       "a is now 12345"
     ])
 
     expect(
-      vm.retrieve('a')
+      vm.run(
+        vm.retrieve('a')
+      )
     ).to eq(
       Result[
-        Int[12345],
+        GInt[12345],
         "a is 12345"
       ]
     )
   end
 
   it 'should increment a value' do
-    vm.store('a', Int[2])
-    expect(vm.increment('a')).to eq(Result[
-      Int[3],
+    rc(vm.store('a', GInt[2]))
+    expect(rc(vm.increment('a'))).to eq(Result[
+      GInt[3],
       "a is now 3"
     ])
-    expect(vm.retrieve('a')).to eq(Result[Int[3], "a is 3"])
+    expect(rc(vm.retrieve('a'))).to eq(Result[GInt[3], "a is 3"])
   end
 
   it 'should add integers' do
+    rc(vm.store('a', GInt[2]))
+    rc(vm.store('b', GInt[3]))
     expect(
-      vm.add_integers(Int[2], Int[3])
+      # c = a + b
+      rc(vm.add('c', 'a', 'b')) #Int[2], Int[3]))
     ).to eq(Result[
-      Int[5],
-      "2 + 3 = 5"
+      GInt[5],
+      "c is now 5"
     ])
   end
 
-  it 'should multiply integers' do
+  xit 'should multiply integers' do
+    rc(vm.store('a', GInt[2]))
+    rc(vm.store('b', GInt[3]))
     expect(
-      vm.multiply_integers(Int[5], Int[6])
+      rc(vm.multiply_integers(GInt[5], GInt[6]))
     ).to eq(Result[
-      Int[30],
+      GInt[30],
       "5 * 6 = 30"
     ])
   end

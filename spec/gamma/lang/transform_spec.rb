@@ -25,12 +25,10 @@ describe Gamma::Lang::Transform do
   end
 
   it 'transforms arithmetic expressions' do
-    tree = {
-      seq: [
-        { l: { i: '1' } },
-        { op: '+', r: { i: '2' } }
-      ]
-    }
+    tree = [
+      { l: { i: '1' } },
+      { op: '+', r: { i: '2' } }
+    ]
 
     expect(subject).to transform(tree).into(
       Sequence[[

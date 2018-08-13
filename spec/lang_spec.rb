@@ -1,18 +1,21 @@
 require 'spec_helper'
 require 'gamma/lang'
 
-describe Gamma::Lang do
+include Gamma
+include Gamma::VM::BuiltinTypes
+
+describe Lang do
   it "should have a VERSION constant" do
     expect(subject.const_get('VERSION')).to_not be_empty
   end
 
-  describe Interpreter do
+  describe Lang::Interpreter do
     it 'should echo back' do
-      expect(subject.evaluate('hello')).to eq 'hello'
+      expect(subject.evaluate('1')).to eq VM::Result[GInt[1], '_ is now 1']
     end
 
-    xit 'should add two ints' do
-      expect(subject.evaluate('1+2')).to eq('3  # 1 + 2 = 3')
+    it 'should add two ints' do
+      expect(subject.evaluate('1+2')).to eq VM::Result[GInt[3], '_ is now 3']
     end
   end
 end

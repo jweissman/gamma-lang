@@ -8,7 +8,7 @@ module Gamma
       rule(op: simple(:op), r: simple(:rhs)) { Operation[[op, rhs]] }
       rule(l: simple(:lhs)) { lhs } # unwrap/pass through???
 
-      rule(seq: sequence(:seq)) { Sequence[seq] }
+      rule(sequence(:seq)) { Sequence[seq] }
       # rule(l: simple(:left), op: simple(:op), r: sequence(:r)) {
 
       def inspect; '(gamma-xform)' end
