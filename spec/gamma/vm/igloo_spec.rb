@@ -11,19 +11,15 @@ describe Igloo do
   def rc(cmd); vm.run(cmd) end
 
   it 'should store a value' do
-    expect(
-      vm.run(
-        vm.store('a', GInt[12345])
-      )
-    ).to eq(Result[
+    expect(rc(
+      vm.store('a', GInt[12345])
+    )).to eq(Result[
       GInt[12345],
       "a is now 12345"
     ])
 
     expect(
-      vm.run(
-        vm.retrieve('a')
-      )
+      vm.run(vm.retrieve('a'))
     ).to eq(
       Result[
         GInt[12345],
@@ -53,14 +49,14 @@ describe Igloo do
     ])
   end
 
-  xit 'should multiply integers' do
+  it 'should multiply integers' do
     rc(vm.store('a', GInt[2]))
     rc(vm.store('b', GInt[3]))
     expect(
-      rc(vm.multiply_integers(GInt[5], GInt[6]))
+      rc(vm.mult('c', 'a', 'b'))
     ).to eq(Result[
-      GInt[30],
-      "5 * 6 = 30"
+      GInt[6],
+      "c is now 6"
     ])
   end
 end

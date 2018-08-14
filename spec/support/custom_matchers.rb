@@ -48,3 +48,5 @@ RSpec::Matchers.define :transform do |tree|
     "expected #{tree} to turn into\n\n    #{expected.inspect}\n\n  but instead got\n\n    #{actual.inspect}\r\n\r\n"
   end
 end
+
+# ...generate...?

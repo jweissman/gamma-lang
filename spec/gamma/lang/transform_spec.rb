@@ -37,4 +37,24 @@ describe Gamma::Lang::Transform do
       ]]
     )
   end
+
+  it 'transforms nested arithmetic' do
+    tree = [
+      {:l=>{:i=>"1"}},
+      {:op=>"+", :r=>[
+        {:l=>{:i=>"2"}},
+        {:op=>"*", :r=>{:i=>"3"}}
+      ]}
+    ]
+
+    expect(subject).to transform(tree).into(
+      Sequence[[
+        IntLiteral[1],
+        Operation[['+', Sequence[[
+          IntLiteral[2],
+          Operation[['*', IntLiteral[3]]]
+        ]]]]
+      ]]
+    )
+  end
 end
