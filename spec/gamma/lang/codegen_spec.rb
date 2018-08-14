@@ -69,7 +69,6 @@ describe Gamma::Lang::Codegen do
         StoreDictionaryKey[['t2', GInt[3]]],
         Mult[['t1','t1','t2']],
         Add[['_','_','t1']]
-                           # M
       ])
     end
   end

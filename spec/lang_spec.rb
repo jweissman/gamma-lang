@@ -24,7 +24,7 @@ describe Lang do
       expect(geval('4*5')).to eq GInt[20]
     end
 
-    xit 'should add AND multiply ints' do
+    it 'should add AND multiply ints' do
       expect(geval('1+2*3')).to eq(GInt[7])
     end
   end

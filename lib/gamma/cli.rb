@@ -18,12 +18,13 @@ module Gamma
       puts
       puts "  Interactive Gamma Interpreter (iggy)"
       puts
-      puts "  welcome!!"
+      puts "   Welcome!"
+      puts
     end
 
     def farewell
       puts
-      puts "   Have a good day!!"
+      puts "   Have a good day!"
       puts
     end
 
@@ -39,6 +40,7 @@ module Gamma
 
     def readline(interpret:)
       while buf = Readline.readline(prompt, true)
+        next if buf.empty?
         begin
           rsp = interpret.call(buf)
         rescue => ex
@@ -47,7 +49,14 @@ module Gamma
           rsp = Gamma::VM::Result[nil, "Error! #{ex.message}"]
         end
 
-        print(reply_prefix, rsp.inspect, "\n")
+        if rsp.is_a?(Gamma::VM::Result)
+          ret, comment = rsp.to_a
+          print(reply_prefix, ret.inspect, " "*(20-ret.inspect.length), "# ", comment, "\n")
+        else
+          # something went wrong, but...
+          puts "---> An unexpected error occurred: #{rsp}"
+        end
+        # print(reply_prefix, rsp.inspect, "\n")
       end
     end
   end
