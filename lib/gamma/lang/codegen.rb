@@ -58,13 +58,15 @@ module Gamma
         # this recursion is interesting too, it's mutually recursive with sequence
         # in a way that confuses our register targeting
         tmp_r = make_temp_id
-        cmds += derive_commands(r, destination_register: tmp_r) #, source_register: '_', destination_register: 't1')
+        cmds += derive_commands(r, destination_register: tmp_r)
 
         cmds << case op
         when '+' then vm.add(destination_register, left_operand_register, tmp_r)
+        when '-' then vm.sub(destination_register, left_operand_register, tmp_r)
         when '*' then vm.mult(destination_register, left_operand_register, tmp_r)
+        when '/' then vm.div(destination_register, left_operand_register, tmp_r)
         else
-          raise "Implement vm operation #{op}"
+          raise "Implement codegen derivation for binary operation #{op}"
         end
         cmds
       end
@@ -73,7 +75,7 @@ module Gamma
       # this is hack-y but not sure how else
       # it does seem there should be an algo here
       # we should need exactly ONE to build a calculator, seriously
-      # ...hm.
+      # ...hm. (so it turns out we *could* rewrite so all tmps are implicit, but.. there are cons to that too)
       def make_temp_id; "t#{inc_tmp}" end
       def inc_tmp; @tmps ||= 0; @tmps += 1; end
     end

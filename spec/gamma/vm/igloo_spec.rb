@@ -59,4 +59,16 @@ describe Igloo do
       "c is now 6"
     ])
   end
+
+  it 'should subtract integers' do
+    rc(vm.store('a', GInt[3]))
+    rc(vm.store('b', GInt[2]))
+    expect(rc(vm.sub('c', 'a', 'b'))).to eq(Result[GInt[1], "c is now 1"])
+  end
+
+  it 'should divide integers' do
+    rc(vm.store('a', GInt[4]))
+    rc(vm.store('b', GInt[2]))
+    expect(rc(vm.div('c', 'a', 'b'))).to eq(Result[GInt[2], "c is now 2"])
+  end
 end

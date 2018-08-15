@@ -14,9 +14,10 @@ module Gamma
       class PutAnonymousRegister < Command; end
       # class AddInts < Command; end
       # class MultiplyInts < Command; end
-
       class Add < Command; end
+      class Subtract < Command; end
       class Mult < Command; end
+      class Div < Command; end
     end
   end
 end

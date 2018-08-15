@@ -23,8 +23,16 @@ module Gamma
         add_command(dest, left, right)
       end
 
+      def sub(dest, left, right)
+        subtract_command(dest, left, right)
+      end
+
       def mult(dest, left, right)
         mult_command(dest, left, right)
+      end
+
+      def div(dest, left, right)
+        div_command(dest, left, right)
       end
 
       def run(cmd)
@@ -58,8 +66,16 @@ module Gamma
         Add[[dst, left, right]]
       end
 
+      def subtract_command(dst, left, right)
+        Subtract[[dst, left, right]]
+      end
+
       def mult_command(dst, left, right)
         Mult[[dst, left, right]]
+      end
+
+      def div_command(dst, left, right)
+        Div[[dst, left, right]]
       end
 
       def put_anonymous_register_command(value)
