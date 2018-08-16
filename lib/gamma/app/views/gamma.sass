@@ -1,0 +1,66 @@
+$gallery: #eaeaea
+$outer-space: #343d3f
+$cosmic: #76395D
+$golden-fizz: #FDF039
+
+$primary: $cosmic
+$app-bg: $gallery
+$app-font-color: darken($primary, 20%)
+
+$app-font-stack: Helvetica, Times
+
+$hero-bg: darken($primary, 3%)
+
+$small-pad: 20px
+$medium-pad: 40px
+$large-pad: 120px
+$huge-pad: 200px
+
+$hero-size: $huge-pad
+
+html
+  background-color: $app-bg
+  color: $app-font-color
+  font-family: $app-font-stack
+  body
+    margin: 0
+
+.gamma-app
+  margin: 0
+  display: flex
+  flex-direction: column
+
+  header
+    margin: 0
+    padding: $small-pad
+    height: $hero-size
+    min-height: $hero-size
+    max-height: $hero-size
+    // overflow: hidden
+    display: flex
+    align-items: center
+    flex-direction: column
+    background-color: darken($app-bg, 10%)
+
+    h1
+      font-size: 36pt
+      text-transform: uppercase
+      span
+        color: lighten($app-font-color, 20%)
+
+    h3
+      text-transform: uppercase
+      color: lighten($app-font-color, 40%)
+  main
+    // background-color: darken($primary, 5%)
+    // color: $primary
+    display: flex
+    padding: $medium-pad
+
+    section
+      margin: $small-pad
+      padding: $small-pad
+      margin: 0
+      background-color: lighten($app-bg, 3%)
+      > h3
+        color: darken($primary, 10%)

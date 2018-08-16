@@ -37,6 +37,9 @@ gem 'thin'
 # Monitor files for changes (re-launch server)
 gem 'filewatcher'
 
+# Stylish stylesheets
+gem 'sass'
+
 
 #
 # Dev + Test dependencies

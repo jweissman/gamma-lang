@@ -9,6 +9,10 @@ module Gamma
         erb :index
       end
 
+      get '/gamma.css' do
+        sass :gamma
+      end
+
       get '/geval' do
         @input = params['user-input']
         @result = begin

@@ -2,44 +2,54 @@
 <html>
   <head>
     <title>Gamma-lang</title>
+    <link rel='stylesheet' href='/gamma.css' />
   </head>
   <body>
     <div class='gamma-app'>
       <header>
-        <h1>welcome to gamma!</h1>
-        <h4>a programming lang for all of us!</h4>
+        <h1>gamma<span>-lang</span></h1>
+        <h4>a programming language for all of us!</h4>
       </header>
 
-      <section class='section'>
-        <h3>getting started.</h3>
-        <p>Gamma-lang is great.</p>
-        <p>We'll learn all about it soon.</p>
-        <p>For now, just skip to the next section.</p>
-      </section>
+      <main>
+        <section>
+          <h3>getting started.</h3>
+          <p>Gamma-lang is great.</p>
+          <p>We'll learn all about it soon.</p>
+          <p>For now, just skip to the next section.</p>
+        </section>
 
-      <section class='section'>
-        <h3>interactive gamma interpreter.</h3>
-        <p>Let's talk to iggy!</p>
+        <section>
+          <h3>interactive gamma interpreter.</h3>
+          <p>Let's talk to iggy!</p>
 
-        <form action='/geval'>
-          <input type='text' name='user-input' placeholder='2+3*4'>
-          </input>
-          <button type='submit'>Ask Iggy</button>
-        </form>
+          <form action='/geval'>
+            <input type='text' name='user-input' placeholder='2+3*4' />
+            <button type='submit'>Ask Iggy</button>
+          </form>
 
-        <div class='iggy'>
-          <span>(iggy's response should appear here...)</span>
-          <div class='user-query'>
-            <b>YOU: <%= @input if @input %></b>
+          <div class='iggy'>
+            <span>(iggy's response should appear here...)</span>
+            <div class='user-query'>
+              <b>YOU: <%= @input if @input %></b>
+            </div>
+            <div class='system-response'>
+              <b>IGGY: <%= @result if @result %></b>
+            </div>
           </div>
-          <div class='system-response'>
-            <b>IGGY: <%= @result if @result %></b>
-          </div>
-        </div>
-      </section>
+        </section>
+
+        <section>
+          <h3>
+        </section>
+      </main>
 
       <footer>
         <small>Retrieved at <%= Date.today %>.</small>
+        <div class='footer-links'>
+          View source on <a href='https://github.com/jweissman/gamma-lang'>Github</a>.
+        </div>
+
       </footer>
     </div>
   </body>

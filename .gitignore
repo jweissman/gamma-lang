@@ -2,3 +2,4 @@
 /html/
 /pkg/
 /vendor/cache/*.gem
+/.sass-cache
