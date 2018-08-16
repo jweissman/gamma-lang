@@ -43,9 +43,9 @@ describe Lang do
       expect(geval('a * 3')).to eq(GInt[6])
     end
 
-    # todo just need a bit more tolerance
-    xit 'is resilient to whitespace' do
-      expect(geval('(2*1) + 3')).to eq(GInt[6])
+    it 'is resilient to whitespace' do
+      expect(geval('(2*1) + 3')).to eq(GInt[5])
+      expect(geval('1 + ( 2 * 1 ) + 3 / ( 3 * 1 ) + 1')).to eq(GInt[5]) # 1 + 2 + 1 + 1
     end
 
   end

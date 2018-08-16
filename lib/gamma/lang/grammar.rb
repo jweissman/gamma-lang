@@ -40,7 +40,7 @@ module Gamma
       # grammar parts
       #
 
-      rule(:subexpression) { lparens >> expression >> rparens }
+      rule(:subexpression) { lparens >> space? >> expression >> space? >> rparens >> space? }
 
       rule(:value)    { integer |
                         ident |
