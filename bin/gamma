@@ -6,9 +6,7 @@ if File.directory?(File.join(root,'.git'))
     begin
       require 'bundler/setup'
       require 'gamma/cli'
-
-      cli = Gamma::CLI.new
-      cli.interact!
+      Gamma::CLI.start(ARGV)
     rescue LoadError => e
       warn e.message
       warn "Run `gem install bundler` to install Bundler"

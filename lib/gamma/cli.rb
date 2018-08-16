@@ -1,68 +1,30 @@
-require "readline"
-require "paint"
-
-require 'gamma/lang'
+require 'thor'
+require 'filewatcher'
+require_relative 'app'
+require_relative 'iggy'
 
 module Gamma
-  class CLI
-    def interact!
-      greet!
-      readline(
-        interpret: ->(inp) { Lang.evaluate(inp) }
-      )
-      farewell!
+  class CLI < Thor
+    # about "gamma is a programming language"
+    # desc "command-line interface to Gamma environment"
+
+    desc 'server', "launch the server"
+    def server
+      # `ruby lib/app/server.rb`
+      App::Server.run!
     end
 
-    protected
-
+    desc 'iggy', "talk to iggy"
     def iggy
-      Paint['iggy', 'blue', :bright]
+      iggy = Iggy.new
+      iggy.interact!
     end
 
-    def greet!
-      puts
-      puts "  Interactive Gamma Interpreter (#{iggy})"
-      puts
-      puts "   Welcome!"
-      puts
-    end
-
-    def farewell!
-      puts
-      puts
-      puts "   Have a good day!"
-      puts
-    end
-
-    def prompt
-      "#{iggy}> "
-    end
-
-    def reply_prefix
-      Paint[' -> ', '#eaeaea']
-    end
-
-    private
-
-    def readline(interpret:)
-      while buf = Readline.readline(prompt, true)
-        next if buf.empty?
-        begin
-          rsp = interpret.call(buf)
-        rescue => ex
-          puts "(An unexpected error occurred!)"
-          # fake error obj?
-          rsp = Gamma::VM::Result[nil, "Error! #{ex.message}"]
-        end
-
-        if rsp.is_a?(Gamma::VM::Result)
-          ret, comment = rsp.to_a
-          print(reply_prefix, ret.inspect, " "*(20-ret.inspect.length), "# ", comment, "\n")
-        else
-          # something went wrong, but...
-          puts "---> An unexpected error occurred: #{rsp}"
-        end
-        # print(reply_prefix, rsp.inspect, "\n")
+    desc 'dev', "launch a development server (watch for changes to source)"
+    def dev
+      App.launch!
+      Filewatcher.new('lib/').watch do |filename, event|
+        App.relaunch!
       end
     end
   end

@@ -34,13 +34,19 @@ describe Lang do
 
     it 'should compute arithmetic expressions containing parentheses' do
       expect(geval('2*(1+3)')).to eq(GInt[8])
+      expect(geval('(2+1)*3')).to eq(GInt[9])
     end
 
     it 'should handle variables' do
       expect(geval('a = 2')).to eq(GInt[2])
       expect(geval('a')).to eq(GInt[2])
-      # binding.pry
       expect(geval('a * 3')).to eq(GInt[6])
     end
+
+    # todo just need a bit more tolerance
+    xit 'is resilient to whitespace' do
+      expect(geval('(2*1) + 3')).to eq(GInt[6])
+    end
+
   end
 end

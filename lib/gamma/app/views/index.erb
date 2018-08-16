@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Gamma-lang</title>
+  </head>
+  <body>
+    <div class='gamma-app'>
+      <header>
+        <h1>welcome to gamma!</h1>
+        <h4>a programming lang for all of us!</h4>
+      </header>
+
+      <section class='section'>
+        <h3>getting started.</h3>
+        <p>Gamma-lang is great.</p>
+        <p>We'll learn all about it soon.</p>
+        <p>For now, just skip to the next section.</p>
+      </section>
+
+      <section class='section'>
+        <h3>interactive gamma interpreter.</h3>
+        <p>Let's talk to iggy!</p>
+
+        <form action='/geval'>
+          <input type='text' name='user-input' placeholder='2+3*4'>
+          </input>
+          <button type='submit'>Ask Iggy</button>
+        </form>
+
+        <div class='iggy'>
+          <span>(iggy's response should appear here...)</span>
+          <div class='user-query'>
+            <b>YOU: <%= @input if @input %></b>
+          </div>
+          <div class='system-response'>
+            <b>IGGY: <%= @result if @result %></b>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <small>Retrieved at <%= Date.today %>.</small>
+      </footer>
+    </div>
+  </body>
+</html>
