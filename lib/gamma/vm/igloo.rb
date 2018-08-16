@@ -21,9 +21,12 @@ module Gamma
       GET_MSG = ->(k,v) { "#{k} is #{v.inspect}" }
       SET_MSG = ->(k,v) { "#{k} is now #{v.inspect}" }
 
+      def copy(dst, src)
+        store_dictionary_key(dst, store.get({ key: src.to_s }))
+      end
+
       def put_anonymous_register(val)
         store_dictionary_key(ANON_REG_KEY, val)
-        # store.set({ key: ANON_REG_KEY, value: val })
       end
 
       def retrieve_dictionary_key(key)

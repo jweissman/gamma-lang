@@ -28,6 +28,19 @@ describe Gamma::Lang::Codegen do
       ])
     end
 
+    it 'retrieves values from named registers' do
+      expect(subject.derive(Ident[:xy])).to eq([
+        Copy[[tmp, :xy]]
+      ])
+    end
+
+    # todo
+    it 'assigns values' do
+      expect(subject.derive(Assign[[:xy, IntLiteral[10]]])).to eq([
+        StoreDictionaryKey[[:xy, GInt[10]]]
+      ])
+    end
+
     it 'converts sequence into list of operations' do
       expect(subject.derive(Sequence[[
         IntLiteral[2],

@@ -10,6 +10,7 @@ describe Gamma::Lang::Parser do
   let(:add_op)   { parser.add_op }
   let(:add_exp ) { parser.add_exp }
   let(:mult_exp) { parser.mult_exp }
+  let(:ident)    { parser.ident }
 
   it 'parses digits' do
     expect(digit).to parse '1'
@@ -32,7 +33,7 @@ describe Gamma::Lang::Parser do
     expect(add_op).not_to parse '1'
   end
 
-  describe 'parsing addition expressions' do
+  describe 'addition expressions' do
     it 'parses 1+1' do
       expect(add_exp).to parse '1+1'
     end
@@ -48,7 +49,7 @@ describe Gamma::Lang::Parser do
     end
   end
 
-  describe 'parsing multiplication expressions' do
+  describe 'multiplication expressions' do
     it 'parses 1*2' do
       expect(mult_exp).to parse '1*2'
       expect(mult_exp).to parse '1/2'
@@ -64,13 +65,29 @@ describe Gamma::Lang::Parser do
     end
   end
 
-  describe 'parsing equations' do
+  describe 'equations' do
     it 'parses 1+2*3' do
       expect(subject).to parse '1+2*3'
     end
 
     it 'parses 2*(1+3)' do
       expect(subject).to parse('2*(1+3)')
+    end
+  end
+
+  describe 'variables' do
+    it 'parses identifiers' do
+      expect(ident).to parse 'abc'
+      expect(ident).to parse 'camelCased'
+      expect(ident).to parse 'under_scores'
+      expect(ident).to parse 'trailingNumbers123'
+      expect(ident).not_to parse 'names.with.dots'
+      expect(ident).not_to parse '96leading_numbers'
+    end
+
+    it 'parses assignment' do
+      expect(subject).to parse('a = 1')
+      p subject.parse('a = 1')
     end
   end
 end

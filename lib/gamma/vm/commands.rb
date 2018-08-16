@@ -18,6 +18,8 @@ module Gamma
       class Subtract < Command; end
       class Mult < Command; end
       class Div < Command; end
+
+      class Copy < Command; end
     end
   end
 end

@@ -12,7 +12,8 @@ module Gamma
                           value }
 
 
-      rule(:stmt) { add_exp }
+      rule(:stmt) { add_exp |
+                    eq_exp }
 
       #
       # arithmetic rules
@@ -24,20 +25,30 @@ module Gamma
       rule(:mult_exp) { value.as(:l) >> (mult_op >> value.as(:r)).repeat(1) |
                         value }
 
-      rule(:subexpression) { lparens >> expression >> rparens }
+      rule(:add_op)   { match['+-'].as(:op) >> space? }
+      rule(:mult_op)  { match['*/'].as(:op) >> space? }
+
+      #
+      # variables
+      #
+
+      rule(:eq_exp) { ident >> eq_op >> expression.as(:eq_rhs) }
+
+      rule(:eq_op)    { match['='].as(:op) >> space? }
 
       #
       # grammar parts
       #
 
-      rule(:add_op)   { match['+-'].as(:op) >> space? }
-      rule(:mult_op)  { match['*/'].as(:op) >> space? }
+      rule(:subexpression) { lparens >> expression >> rparens }
 
       rule(:value)    { integer |
+                        ident |
                         subexpression }
 
       rule(:integer)  { digit.repeat(1).as(:i) >> space? }
 
+      rule(:ident) { (alpha.repeat(1) >> (alpha | digit | underscore).repeat).as(:id) >> space? }
 
       #
       # 1 char rules
@@ -48,6 +59,8 @@ module Gamma
       rule(:digit)  { match['0-9'] }
       rule(:lparens) { match['('] }
       rule(:rparens) { match[')'] }
+      rule(:alpha) { match['a-zA-Z'] }
+      rule(:underscore) { match['_'] }
 
     end
   end

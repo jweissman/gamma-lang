@@ -25,6 +25,13 @@ module Gamma
       #
       def derive_commands(ast_node, destination_register:)
         case ast_node
+        when Ident then
+          # we need to retrieve the value and put into dst
+          id = ast_node.contents
+          [
+            # just put the value directly in the target register
+            vm.copy(destination_register, id)
+          ]
         when IntLiteral then
           vm_int = VM::BuiltinTypes::GInt[ast_node.contents]
           [
@@ -46,6 +53,11 @@ module Gamma
             left_operand_register: destination_register,
             destination_register: destination_register
           )
+        when Assign then
+          id, rhs = *ast_node.contents
+          # cmds = []
+          # tmp_r = make_temp_id
+          derive_commands(rhs, destination_register: id)
         else
           raise "Implement commands for node type #{ast_node.class.name.split('::').last}"
         end

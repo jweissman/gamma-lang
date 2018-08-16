@@ -7,6 +7,10 @@ module Gamma
         put_anonymous_register_command(val)
       end
 
+      def copy(dst, src)
+        copy_command(dst, src)
+      end
+
       def retrieve(key)
         get_command(key)
       end
@@ -80,6 +84,10 @@ module Gamma
 
       def put_anonymous_register_command(value)
         PutAnonymousRegister[[value]]
+      end
+
+      def copy_command(dst, src)
+        Copy[[dst, src]]
       end
     end
   end
