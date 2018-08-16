@@ -48,7 +48,7 @@ module Gamma
 
       rule(:integer)  { digit.repeat(1).as(:i) >> space? }
 
-      rule(:ident) { (alpha.repeat(1) >> (alpha | digit | underscore).repeat).as(:id) >> space? }
+      rule(:ident) { ((alpha | underscore).repeat(1) >> (alpha | digit | underscore).repeat).as(:id) >> space? }
 
       #
       # 1 char rules
