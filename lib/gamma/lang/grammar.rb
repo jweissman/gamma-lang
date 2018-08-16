@@ -24,6 +24,8 @@ module Gamma
       rule(:mult_exp) { value.as(:l) >> (mult_op >> value.as(:r)).repeat(1) |
                         value }
 
+      rule(:subexpression) { lparens >> expression >> rparens }
+
       #
       # grammar parts
       #
@@ -31,7 +33,8 @@ module Gamma
       rule(:add_op)   { match['+-'].as(:op) >> space? }
       rule(:mult_op)  { match['*/'].as(:op) >> space? }
 
-      rule(:value)    { integer }
+      rule(:value)    { integer |
+                        subexpression }
 
       rule(:integer)  { digit.repeat(1).as(:i) >> space? }
 
@@ -43,7 +46,8 @@ module Gamma
       rule(:space)  { match['\s'].repeat }
       rule(:space?) { space.maybe }
       rule(:digit)  { match['0-9'] }
-
+      rule(:lparens) { match['('] }
+      rule(:rparens) { match[')'] }
 
     end
   end

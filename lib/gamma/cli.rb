@@ -27,7 +27,8 @@ module Gamma
       puts
     end
 
-    def farewell
+    def farewell!
+      puts
       puts
       puts "   Have a good day!"
       puts

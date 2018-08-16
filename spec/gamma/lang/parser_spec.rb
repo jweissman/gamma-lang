@@ -67,7 +67,10 @@ describe Gamma::Lang::Parser do
   describe 'parsing equations' do
     it 'parses 1+2*3' do
       expect(subject).to parse '1+2*3'
-      p subject.parse('1+2*3')
+    end
+
+    it 'parses 2*(1+3)' do
+      expect(subject).to parse('2*(1+3)')
     end
   end
 end

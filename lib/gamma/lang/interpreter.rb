@@ -9,7 +9,7 @@ module Gamma
           commands = codegen.derive(intermediate_ast)
           run_commands(commands)
         else
-          "(could not parse input string #{str}: #{matched.error})"
+          raise "Could not parse input string #{str}: #{matched.error}"
         end
       end
 

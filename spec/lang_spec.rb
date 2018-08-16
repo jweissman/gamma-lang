@@ -32,7 +32,7 @@ describe Lang do
       expect(geval('1-2')).to eq(GInt[-1])
     end
 
-    xit 'should compute arithmetic expressions containing parentheses' do
+    it 'should compute arithmetic expressions containing parentheses' do
       expect(geval('2*(1+3)')).to eq(GInt[8])
     end
   end
