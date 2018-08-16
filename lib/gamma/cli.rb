@@ -1,4 +1,5 @@
 require "readline"
+require "paint"
 
 require 'gamma/lang'
 
@@ -14,9 +15,13 @@ module Gamma
 
     protected
 
+    def iggy
+      Paint['iggy', 'blue', :bright]
+    end
+
     def greet!
       puts
-      puts "  Interactive Gamma Interpreter (iggy)"
+      puts "  Interactive Gamma Interpreter (#{iggy})"
       puts
       puts "   Welcome!"
       puts
@@ -29,11 +34,11 @@ module Gamma
     end
 
     def prompt
-      'iggy> '
+      "#{iggy}> "
     end
 
     def reply_prefix
-      ' -> '
+      Paint[' -> ', '#eaeaea']
     end
 
     private
