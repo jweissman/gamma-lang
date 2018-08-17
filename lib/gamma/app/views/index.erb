@@ -8,54 +8,66 @@
     <div class='gamma-app'>
       <header>
         <h1>gamma<span>-lang</span></h1>
-        <h4>a programming language for all of us!</h4>
       </header>
+      <div class='divider'> </div>
 
       <main>
-        <section>
-          <h3>getting started.</h3>
-          <div class='divider' />
-          <p>Gamma-lang is great.</p>
-          <p>We'll learn all about it soon.</p>
-          <p>For now, just skip to the next section.</p>
-        </section>
+        <div class='section'>
+          <div class='section-heading'>
+            <h3>getting started.</h3>
+          </div>
+          <div class='divider'></div>
+          <div class='section-body'>
+            <p>Gamma-lang is great.</p>
+            <p>We'll learn all about it soon.</p>
+            <p>For now, just skip to the next section.</p>
+          </div>
+        </div>
 
-        <section>
-          <h3>interactive gamma interpreter.</h3>
-          <div class='divider' />
-          <p>Let's talk to iggy!</p>
-
-          <form action='/geval'>
-            <input type='text' name='user-input' placeholder='2+3*4' />
-            <button type='submit'>Ask Iggy</button>
-          </form>
-
-          <div class='iggy'>
-            <span>(iggy's response should appear here...)</span>
-            <div class='user-query'>
-              <b>YOU: <%= @input if @input %></b>
-            </div>
-            <div class='system-response'>
-              <b>IGGY: <%= @result if @result %></b>
+        <div class='section'>
+          <div class='section-heading'>
+            <h3>interactive gamma interpreter.</h3>
+          </div>
+          <div class='divider'></div>
+          <div class='iggy-container'>
+            <div class='iggy'>
+              <div class='user-query'>
+                $ <%= @input if @input %>
+              </div>
+              <div class='system-response'>
+                -> <%= @result if @result %>
+              </div>
+              <div class='spacer'></div>
+              <form action='/geval'>
+                <input type='text' name='user-input' placeholder='2+3*4' />
+                <button type='submit'>Ask Iggy</button>
+              </form>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section>
-          <h3>having fun.</h3>
-          <div class='divider' />
-          <hr/>
-          <p>This is very important!</p>
-        </section>
+        <div class='section'>
+          <div class='section-heading'>
+            <h3>having fun.</h3>
+          </div>
+          <div class='divider'></div>
+          <div class='section-body'>
+            <p>This is very important!</p>
+          </div>
+        </div>
       </main>
 
+      <div class='divider'> </div>
       <footer>
         <small>Retrieved at <%= Date.today %>.</small>
         <div class='footer-links'>
+          Rendered by gamma-lang v<%= Gamma::Lang::VERSION %>.
+          |
           View source on <a href='https://github.com/jweissman/gamma-lang'>Github</a>.
         </div>
 
       </footer>
+      <div class='divider'> </div>
     </div>
   </body>
 </html>

@@ -3,21 +3,26 @@ $outer-space: #343d3f
 $cosmic: #76395D
 $golden-fizz: #FDF039
 
-$primary: $cosmic
-$app-bg: $gallery
-$app-font-color: darken($primary, 20%)
+$primary: $outer-space
+$secondary: $cosmic
+$info: $gallery
+
+$app-bg: $info
+$app-chrome: darken($info, 2%)
+$app-font-color: $primary
 
 $app-font-stack: Helvetica, Times
 
-$hero-bg: darken($primary, 3%)
+$micro-unit:  6px
+$tiny-unit:   28px
+$small-unit:  60px
+$medium-unit: 140px
+$large-unit:  220px
+$hero-unit:   420px
 
-$small-unit: 20px
-$medium-unit: 40px
-$large-unit: 120px
-$hero-unit: 200px
-
-$hero-size: $hero-unit
-
+$hero-bg: transparent
+$section-heading-bg: lighten($primary, 5%)
+$section-heading-font-color: lighten($secondary, 50%)
 
 html
   background-color: $app-bg
@@ -25,44 +30,103 @@ html
   font-family: $app-font-stack
   body
     margin: 0
+    padding: 0
 
 .gamma-app
-  margin: 0
-  display: flex
-  flex-direction: column
-
   header
-    margin: 0
-    height: $hero-size
-    min-height: $hero-size
-    max-height: $hero-size
     display: flex
-    align-items: center
     flex-direction: column
-    background-color: darken($app-bg, 10%)
-
+    background-color: $hero-bg
     h1
-      font-size: 36pt
+      align-self: center
+      font-size: 96pt
       text-transform: uppercase
       span
-        color: lighten($app-font-color, 20%)
-
-    h3
-      text-transform: uppercase
-      color: lighten($app-font-color, 40%)
+        color: lighten($cosmic, 20%)
 
   main
     display: flex
-    margin: 0
-
-    section
-      border: 1px solid lighten($primary, 40%)
-      margin: $large-unit
-      background-color: lighten($app-bg, 3%)
-      > h3
-        color: darken($primary, 10%)
-        margin: inherit
-      > .divider
-        height: 1px
+    flex-flow: row wrap
+    padding: $tiny-unit
+    .section
+      background-color: lighten($app-chrome, 4%)
+      border: 1px solid $app-chrome
+      margin: $micro-unit
+      min-width: $hero-unit
+      height: $hero-unit
+      .section-heading
+        height: $small-unit
+        background-color: $section-heading-bg
         width: 100%
-        background-color: darken($primary, 50%)
+        display: flex
+        align-items: center
+        flex-direction: column
+        h3
+          color: $section-heading-font-color //lighten($secondary, 12%)
+      .section-body
+        padding: $micro-unit
+footer
+  small
+    color: lighten($app-font-color, 36%)
+  padding: $micro-unit
+  background-color: $info
+
+// common
+.divider
+  height: 1px
+  width: 100%
+  background-color: $app-chrome
+
+// iggy
+$iggy-term-bg: transparent
+$iggy-font-color: $app-font-color //lighten($secondary, 24%)
+$iggy-font: Courier New
+$iggy-font-size: 16pt
+
+@mixin iggy-font
+  font-family: $iggy-font
+  color: $iggy-font-color
+  font-size: $iggy-font-size
+
+.iggy-container
+  height: $hero-unit - $small-unit
+  background-color: $iggy-term-bg //darken($primary, 30%)
+  @include iggy-font
+  .iggy
+    display: flex
+    flex-direction: column
+    .user-query
+      padding: $micro-unit
+    .system-response
+      padding: $micro-unit
+    .spacer
+      width: 100%
+      min-height: 1px
+      flex-grow: 1
+      background-color: $iggy-font-color
+    form
+      padding: $micro-unit
+      align-items: flex-end
+      input[type='text']
+        @include iggy-font
+        height: $small-unit - $micro-unit
+        background-color: transparent
+        color: $iggy-font-color
+        font-family: $iggy-font
+        margin: 0
+        //padding: $micro-unit
+        width: 100%
+      button
+        @include iggy-font
+        font-family: $iggy-font
+        width: $small-unit
+        height: $small-unit
+        background-color: transparent
+        color: $iggy-font-color
+        margin: $micro-unit
+        width: 50%
+    .system-response
+      max-width: $hero-unit
+      display: flex
+      word-wrap: break-word
+      font-weight: bolder
