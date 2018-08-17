@@ -95,15 +95,11 @@ $iggy-font-size: 16pt
   .iggy
     display: flex
     flex-direction: column
-    .user-query
-      padding: $micro-unit
-    .system-response
-      padding: $micro-unit
     .spacer
       width: 100%
       min-height: 1px
       flex-grow: 1
-      background-color: $iggy-font-color
+      background-color: $app-chrome
     form
       padding: $micro-unit
       align-items: flex-end
@@ -124,8 +120,10 @@ $iggy-font-size: 16pt
         color: $iggy-font-color
         margin: $micro-unit
         width: 50%
+    .user-query
+      max-width: $hero-unit
+      overflow-wrap: break-word
     .system-response
       max-width: $hero-unit
-      display: flex
-      word-wrap: break-word
+      overflow-wrap: break-word
       font-weight: bolder
