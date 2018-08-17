@@ -1,9 +1,5 @@
 module Gamma
   module Lang
-    # Traversal = Struct.new(:node) do
-    # end
-    # ASTN
-
     class Codegen
       def initialize(vm:)
         @vm = vm
@@ -41,13 +37,9 @@ module Gamma
         when Sequence then
           # seq_target -- use dst as working register
           ast_node.contents.flat_map do |list_elem|
-            # okay, so we may we in a nested context here
-            # in which case... what should we do?
-            # we don't want to smash the register
             derive_commands(list_elem, destination_register: destination_register)
           end
         when Operation then
-          # left_operand_register = source_register || destination_register #'t0'
           derive_operation(
             ast_node,
             left_operand_register: destination_register,
@@ -55,8 +47,6 @@ module Gamma
           )
         when Assign then
           id, rhs = *ast_node.contents
-          # cmds = []
-          # tmp_r = make_temp_id
           derive_commands(rhs, destination_register: id)
         else
           raise "Implement commands for node type #{ast_node.class.name.split('::').last}"

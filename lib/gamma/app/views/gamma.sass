@@ -62,7 +62,7 @@ html
         align-items: center
         flex-direction: column
         h3
-          color: $section-heading-font-color //lighten($secondary, 12%)
+          color: $section-heading-font-color
       .section-body
         padding: $micro-unit
 footer
@@ -79,7 +79,7 @@ footer
 
 // iggy
 $iggy-term-bg: transparent
-$iggy-font-color: $app-font-color //lighten($secondary, 24%)
+$iggy-font-color: $app-font-color
 $iggy-font: Courier New
 $iggy-font-size: 16pt
 
@@ -90,7 +90,7 @@ $iggy-font-size: 16pt
 
 .iggy-container
   height: $hero-unit - $small-unit
-  background-color: $iggy-term-bg //darken($primary, 30%)
+  background-color: $iggy-term-bg
   @include iggy-font
   .iggy
     display: flex
@@ -114,7 +114,6 @@ $iggy-font-size: 16pt
         color: $iggy-font-color
         font-family: $iggy-font
         margin: 0
-        //padding: $micro-unit
         width: 100%
       button
         @include iggy-font

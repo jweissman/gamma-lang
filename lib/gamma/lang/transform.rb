@@ -10,7 +10,6 @@ module Gamma
       rule(l: simple(:lhs)) { lhs } # unwrap/pass through???
 
       rule(sequence(:seq)) { Sequence[seq] }
-      # rule(l: simple(:left), op: simple(:op), r: sequence(:r)) {
 
       def inspect; '(gamma-xform)' end
     end

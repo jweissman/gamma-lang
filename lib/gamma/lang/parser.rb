@@ -33,10 +33,6 @@ module Gamma
           grammar.send(part_sym).parse(str)
         end
       end
-
-      # def parse?(str)
-      #   parse(str).successful?
-      # end
     end
 
     class Parser
