@@ -11,12 +11,13 @@ $app-font-stack: Helvetica, Times
 
 $hero-bg: darken($primary, 3%)
 
-$small-pad: 20px
-$medium-pad: 40px
-$large-pad: 120px
-$huge-pad: 200px
+$small-unit: 20px
+$medium-unit: 40px
+$large-unit: 120px
+$hero-unit: 200px
 
-$hero-size: $huge-pad
+$hero-size: $hero-unit
+
 
 html
   background-color: $app-bg
@@ -32,11 +33,9 @@ html
 
   header
     margin: 0
-    padding: $small-pad
     height: $hero-size
     min-height: $hero-size
     max-height: $hero-size
-    // overflow: hidden
     display: flex
     align-items: center
     flex-direction: column
@@ -51,16 +50,19 @@ html
     h3
       text-transform: uppercase
       color: lighten($app-font-color, 40%)
+
   main
-    // background-color: darken($primary, 5%)
-    // color: $primary
     display: flex
-    padding: $medium-pad
+    margin: 0
 
     section
-      margin: $small-pad
-      padding: $small-pad
-      margin: 0
+      border: 1px solid lighten($primary, 40%)
+      margin: $large-unit
       background-color: lighten($app-bg, 3%)
       > h3
         color: darken($primary, 10%)
+        margin: inherit
+      > .divider
+        height: 1px
+        width: 100%
+        background-color: darken($primary, 50%)

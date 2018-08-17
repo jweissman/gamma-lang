@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+root = File.expand_path(File.join(File.dirname(__FILE__),'..'))
+if File.directory?(File.join(root,'.git'))
+  Dir.chdir(root) do
+    begin
+      require 'bundler/setup'
+      require 'filewatcher'
+      require 'gamma/app'
+      Gamma::App.launch!
+      Filewatcher.new('lib/').watch do |filename, event|
+        Gamma::App.relaunch!
+      end
+    rescue SystemExit
+      Gamma::App.kill!
+      raise '(hard exit)'
+    rescue LoadError => e
+      warn e.message
+      warn "Run `gem install bundler` to install Bundler"
+      exit(-1)
+    end
+  end
+end

@@ -1,5 +1,5 @@
 require 'thor'
-require 'filewatcher'
+# require 'filewatcher'
 require_relative 'app'
 require_relative 'iggy'
 
@@ -18,14 +18,6 @@ module Gamma
     def iggy
       iggy = Iggy.new
       iggy.interact!
-    end
-
-    desc 'dev', "launch a development server (watch for changes to source)"
-    def dev
-      App.launch!
-      Filewatcher.new('lib/').watch do |filename, event|
-        App.relaunch!
-      end
     end
   end
 end
