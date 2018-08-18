@@ -50,7 +50,11 @@ describe Lang do
 
     it 'should call builtins' do
       # no side effect, returns Nothing
-      expect(geval('puts(1,2,3)')).to eq(GNothing[])
+      expect(geval('puts()')).to eq(GNothing[])
+      expect(geval('puts(0)')).to eq(GNothing[])
+      expect(geval('puts(1,2)')).to eq(GNothing[])
+      expect(geval('puts(1+2,2+4,4+5)')).to eq(GNothing[])
+      expect(geval('puts(puts(1))')).to eq(GNothing[])
     end
   end
 end

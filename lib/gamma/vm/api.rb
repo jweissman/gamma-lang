@@ -4,10 +4,8 @@ module Gamma
       include Commands
 
       def builtin?(method)
-        [ 'puts' ].include?(method)
+        VM::Igloo::BUILTIN_METHODS.keys.include?(method.to_sym)
       end
-
-      ###
 
       def call_builtin(method, arglist)
         call_builtin_command(method, arglist)

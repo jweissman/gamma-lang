@@ -12,9 +12,9 @@ module Gamma
                           value }
 
 
-      rule(:stmt) { add_exp |
-                    eq_exp |
-                    funcall }
+      rule(:stmt) { funcall |
+                    add_exp |
+                    eq_exp }
 
       #
       # arithmetic rules

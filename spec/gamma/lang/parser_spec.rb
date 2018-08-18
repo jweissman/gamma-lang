@@ -98,7 +98,7 @@ describe Gamma::Lang::Parser do
       expect(funcall).to parse('puts(1, 2)')
       expect(funcall).to parse('puts(1 + 2)')
       expect(funcall).to parse('puts(1, 2, 3 + 4)')
-      p funcall.parse 'puts(1, 2, 3 + 4, 5)'
+      expect(funcall).to parse('puts(1, 2, puts(3 + 4))')
     end
   end
 end
