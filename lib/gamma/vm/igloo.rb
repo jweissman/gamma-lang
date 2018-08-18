@@ -85,8 +85,8 @@ module Gamma
         ]
       end
 
+      # invoke udf by name, with arg registers in an array
       def call_user_defined_function(method_name, arg_registers)
-        # get_dictionary_key(
         meth = store.get({ key: method_name })
 
         raise "#{method_name} is not a GFunction!" unless meth.is_a?(GFunction)
@@ -118,12 +118,20 @@ module Gamma
 
       protected
 
+      using Gamma::Ext
 
       def three_register_op(op, dest, left, right)
         l = retrieve_dictionary_key(left).ret_value
         r = retrieve_dictionary_key(right).ret_value
-        result = apply_op(op, l.value, r.value)
-        store_dictionary_key(dest, GInt[result])
+        if l.is_a?(GInt) && r.is_a?(GInt)
+          raise "The universe explodes!" if r.value == 0
+          result = apply_op(op, l.value, r.value)
+          store_dictionary_key(dest, GInt[result])
+        else
+          raise "Can only multiply ints together " + \
+            "(got #{l.class.name.demodulize} and " + \
+            "#{r.class.name.demodulize})"
+        end
       end
 
       def apply_op(op, lval, rval)
