@@ -62,7 +62,7 @@ html
         align-items: center
         flex-direction: column
         h3
-          color: $section-heading-font-color //lighten($secondary, 12%)
+          color: $section-heading-font-color
       .section-body
         padding: $micro-unit
 footer
@@ -79,7 +79,7 @@ footer
 
 // iggy
 $iggy-term-bg: transparent
-$iggy-font-color: $app-font-color //lighten($secondary, 24%)
+$iggy-font-color: $app-font-color
 $iggy-font: Courier New
 $iggy-font-size: 16pt
 
@@ -90,20 +90,16 @@ $iggy-font-size: 16pt
 
 .iggy-container
   height: $hero-unit - $small-unit
-  background-color: $iggy-term-bg //darken($primary, 30%)
+  background-color: $iggy-term-bg
   @include iggy-font
   .iggy
     display: flex
     flex-direction: column
-    .user-query
-      padding: $micro-unit
-    .system-response
-      padding: $micro-unit
     .spacer
       width: 100%
       min-height: 1px
       flex-grow: 1
-      background-color: $iggy-font-color
+      background-color: $app-chrome
     form
       padding: $micro-unit
       align-items: flex-end
@@ -114,7 +110,6 @@ $iggy-font-size: 16pt
         color: $iggy-font-color
         font-family: $iggy-font
         margin: 0
-        //padding: $micro-unit
         width: 100%
       button
         @include iggy-font
@@ -125,8 +120,10 @@ $iggy-font-size: 16pt
         color: $iggy-font-color
         margin: $micro-unit
         width: 50%
+    .user-query
+      max-width: $hero-unit
+      overflow-wrap: break-word
     .system-response
       max-width: $hero-unit
-      display: flex
-      word-wrap: break-word
+      overflow-wrap: break-word
       font-weight: bolder

@@ -1,9 +1,5 @@
 module Gamma
   module Lang
-    # Traversal = Struct.new(:node) do
-    # end
-    # ASTN
-
     class Codegen
       def initialize(vm:)
         @vm = vm
@@ -41,13 +37,9 @@ module Gamma
         when Sequence then
           # seq_target -- use dst as working register
           ast_node.contents.flat_map do |list_elem|
-            # okay, so we may we in a nested context here
-            # in which case... what should we do?
-            # we don't want to smash the register
             derive_commands(list_elem, destination_register: destination_register)
           end
         when Operation then
-          # left_operand_register = source_register || destination_register #'t0'
           derive_operation(
             ast_node,
             left_operand_register: destination_register,
@@ -55,9 +47,12 @@ module Gamma
           )
         when Assign then
           id, rhs = *ast_node.contents
-          # cmds = []
-          # tmp_r = make_temp_id
           derive_commands(rhs, destination_register: id)
+        when Funcall then
+          derive_funcall(
+            ast_node,
+            destination_register: destination_register
+          )
         else
           raise "Implement commands for node type #{ast_node.class.name.split('::').last}"
         end
@@ -78,9 +73,31 @@ module Gamma
         when '*' then vm.mult(destination_register, left_operand_register, tmp_r)
         when '/' then vm.div(destination_register, left_operand_register, tmp_r)
         else
-          raise "Implement codegen derivation for binary operation #{op}"
+          raise "No such builtin binary operation #{op}"
         end
         cmds
+      end
+
+      def derive_funcall(ast_node, destination_register:)
+        ident, arglist = *ast_node.contents
+        cmds = []
+        method = ident.contents.to_s
+
+        # lookup builtins
+        if vm.builtin?(ident.contents.to_s)
+          # reify args
+          reified_arg_tmp_rs = arglist.map { make_temp_id }
+
+          cmds += arglist.zip(reified_arg_tmp_rs).flat_map do |arg, tmp_r|
+            derive_commands(arg, destination_register: tmp_r)
+          end
+
+          cmds.push(vm.call_builtin(method, reified_arg_tmp_rs))
+
+          return cmds
+        else
+          raise "No builtin method #{ident.contents}"
+        end
       end
 
       # temp helper?

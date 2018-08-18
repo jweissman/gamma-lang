@@ -45,5 +45,14 @@ gem 'sass'
 # Dev + Test dependencies
 #
 group :development, :test do
+  # Use pry to debug
   gem 'pry'
+end
+
+#
+# CI dependencies
+#
+group :ci do
+  # Format rspec output for Circle CI
+  gem 'rspec_junit_formatter'
 end

@@ -87,7 +87,18 @@ describe Gamma::Lang::Parser do
 
     it 'parses assignment' do
       expect(subject).to parse('a = 1')
-      p subject.parse('a = 1')
+    end
+  end
+
+  describe 'function calls' do
+    subject(:funcall) { parser }
+    it 'parses funcall' do
+      expect(funcall).to parse('puts()')
+      expect(funcall).to parse('puts(1)')
+      expect(funcall).to parse('puts(1, 2)')
+      expect(funcall).to parse('puts(1 + 2)')
+      expect(funcall).to parse('puts(1, 2, 3 + 4)')
+      expect(funcall).to parse('puts(1, 2, puts(3 + 4))')
     end
   end
 end

@@ -3,6 +3,14 @@ module Gamma
     class API < Struct.new(:machine)
       include Commands
 
+      def builtin?(method)
+        VM::Igloo::BUILTIN_METHODS.keys.include?(method.to_sym)
+      end
+
+      def call_builtin(method, arglist)
+        call_builtin_command(method, arglist)
+      end
+
       def put_anonymous(val)
         put_anonymous_register_command(val)
       end
@@ -88,6 +96,10 @@ module Gamma
 
       def copy_command(dst, src)
         Copy[[dst, src]]
+      end
+
+      def call_builtin_command(method, arglist)
+        CallBuiltin[[method, arglist]]
       end
     end
   end

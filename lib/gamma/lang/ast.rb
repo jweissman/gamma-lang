@@ -24,6 +24,9 @@ module Gamma
 
       class Assign < Node
       end
+
+      class Funcall < Node
+      end
     end
   end
 end

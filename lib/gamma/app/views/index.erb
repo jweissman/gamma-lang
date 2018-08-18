@@ -34,9 +34,16 @@
               <div class='user-query'>
                 $ <%= @input if @input %>
               </div>
+              <div class='spacer'></div>
               <div class='system-response'>
-                -> <%= @result if @result %>
+                <%= "Iggy: #{@result}" if @result %>
               </div>
+              <% if @output && !@output.empty? %>
+                <div class='spacer'></div>
+                <div class='system-stdout'>
+                  <%= "STDOUT: #{@output}" %>
+                </div>
+              <% end %>
               <div class='spacer'></div>
               <form action='/geval'>
                 <input type='text' name='user-input' placeholder='2+3*4' />

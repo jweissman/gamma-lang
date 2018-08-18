@@ -33,5 +33,11 @@ describe Gamma::Lang::Grammar do
         ])
       end
     end
+
+    describe 'function calls' do
+      it 'matches function calls' do
+        expect(subject.parse('puts()')).to eq(func: {id: 'puts'}, arglist: nil)
+      end
+    end
   end
 end

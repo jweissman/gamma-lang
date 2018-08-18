@@ -21,6 +21,14 @@ module Gamma
       GET_MSG = ->(k,v) { "#{k} is #{v.inspect}" }
       SET_MSG = ->(k,v) { "#{k} is now #{v.inspect}" }
 
+      # Builtins
+      BUILTIN_METHODS = {
+        puts: ->(*args) do
+          args.each { |arg| print arg.inspect; puts }
+          GNothing[]
+        end
+      }
+
       def copy(dst, src)
         store_dictionary_key(dst, store.get({ key: src.to_s }))
       end
@@ -59,6 +67,19 @@ module Gamma
 
       def div(dest, left, right)
         three_register_op('/', dest, left, right)
+      end
+
+      def call_builtin(method_name, arg_registers)
+        args = arg_registers.map do |key|
+          store.get({ key: key })
+        end
+
+        meth = BUILTIN_METHODS[method_name.to_sym]
+
+        Result[
+          meth.call(*args),
+          "Executed builtin method #{method_name}"
+        ]
       end
 
       protected

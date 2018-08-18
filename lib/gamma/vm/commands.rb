@@ -7,19 +7,16 @@ module Gamma
         end
       end
 
-      class StoreDictionaryKey < Command; end
-      class RetrieveDictionaryKey < Command; end
-      class IncrementDictionaryKey < Command; end
-
-      class PutAnonymousRegister < Command; end
-      # class AddInts < Command; end
-      # class MultiplyInts < Command; end
       class Add < Command; end
-      class Subtract < Command; end
-      class Mult < Command; end
-      class Div < Command; end
-
+      class CallBuiltin < Command; end
       class Copy < Command; end
+      class Div < Command; end
+      class IncrementDictionaryKey < Command; end
+      class Mult < Command; end
+      class PutAnonymousRegister < Command; end
+      class RetrieveDictionaryKey < Command; end
+      class StoreDictionaryKey < Command; end
+      class Subtract < Command; end
     end
   end
 end
