@@ -3,6 +3,11 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: gamma-lang
 jobs:
   build:
     docker:
