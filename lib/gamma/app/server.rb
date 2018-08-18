@@ -9,6 +9,7 @@ module Gamma
 
       get '/' do
         puts 'hi there!'
+        @input = ''; @output = ''
         erb :index
       end
 
@@ -24,7 +25,7 @@ module Gamma
             @result = Gamma::Lang.evaluate(@input).ret_value.inspect
           end
         rescue => ex
-          "ERR: #{ex.message}"
+          @result = "ERR: #{ex.message}"
         end
         puts "you said #{@input}"
         puts "iggy said #{@result}"

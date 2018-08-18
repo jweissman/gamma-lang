@@ -8,12 +8,11 @@ module Gamma
   # interactive gamma interpreter (iggy)
   #
   class Iggy
-    PRIMARY = '76395D'  # cosmic
+    PRIMARY = 'd4a7c2'  # cosmic-light
     ACCENT  = '343d3f'  # outer-space
     WARN    = 'fdf039'  # golden fizz
-    INFO    = 'eaeaea'  # gallery
-    # ERROR
-    #
+    INFO    = 'f0f2f2'  # ...light accent
+
     def debug?; true end
 
     def interact!

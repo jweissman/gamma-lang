@@ -45,9 +45,15 @@
                 </div>
               <% end %>
               <div class='spacer'></div>
+              <div class='flow-fill'></div>
               <form action='/geval'>
                 <input type='text' name='user-input' placeholder='2+3*4' />
                 <button type='submit'>Ask Iggy</button>
+                <% if (@input.length + @output.length) > 18 %>
+                  <small>
+                    (Fullscreen editor coming soon!)
+                  </small>
+                <% end %>
               </form>
             </div>
           </div>

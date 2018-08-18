@@ -1,28 +1,66 @@
+// units
+$micro-unit:  2px
+$tiny-unit:   4 * $micro-unit //12px
+$small-unit:  3 * $tiny-unit // 60px
+$medium-unit: 3 * $small-unit // 140px
+$large-unit:  3 * $medium-unit // 220px
+$hero-unit:   2 * $large-unit // 420px
+
+//// COLORS
+
+// achromatics
 $gallery: #eaeaea
+
+// pinks and purples
+$blossom: #dcb4bc
+$cosmic: #76395d
+
+// blues and purples
+$cerulean: #02a4d3
 $outer-space: #343d3f
-$cosmic: #76395D
-$golden-fizz: #FDF039
 
-$primary: $outer-space
-$secondary: $cosmic
-$info: $gallery
+// yellows
+$golden-fizz: #fdf039
 
-$app-bg: $info
-$app-chrome: darken($info, 2%)
-$app-font-color: $primary
+// browns
+$congo: #553b36
 
+// core
+$primary:   $blossom
+$accent:    $outer-space
+$secondary: $cerulean
+//cosmic
+//
+$warn:      $golden-fizz
+$info:      lighten($accent, 72%) //gallery
+// $success: $cerulean
+// $error: ...
+
+//////
+
+$offset-percent: 4%
+
+$primary-light: lighten($primary, $offset-percent)
+$accent-light: lighten($accent, $offset-percent)
+$accent-dark:  darken($accent, $offset-percent)
+
+$info-light: lighten($info, $offset-percent * 2)
+$info-dark: darken($info, $offset-percent * 2)
+
+// context map
+
+$app-bg: $info //lighten(desaturate($primary, 30%), 30%)
+$app-chrome: $info-dark
+$app-accent: $accent-light
+$app-font-color: desaturate($accent-light, $offset-percent)
 $app-font-stack: Helvetica, Times
 
-$micro-unit:  6px
-$tiny-unit:   28px
-$small-unit:  60px
-$medium-unit: 140px
-$large-unit:  220px
-$hero-unit:   420px
+$hero-bg: $info-light
+$hero-accent: $primary
 
-$hero-bg: transparent
-$section-heading-bg: lighten($primary, 5%)
-$section-heading-font-color: lighten($secondary, 50%)
+$section-heading-font-color: lighten(desaturate($primary-light, $offset-percent), $offset-percent)
+$section-bg: $info-light
+$section-heading-bg: $accent-light
 
 html
   background-color: $app-bg
@@ -33,6 +71,8 @@ html
     padding: 0
 
 .gamma-app
+  display: flex
+  flex-direction: column
   header
     display: flex
     flex-direction: column
@@ -42,34 +82,37 @@ html
       font-size: 96pt
       text-transform: uppercase
       span
-        color: lighten($cosmic, 20%)
+        color: $hero-accent
 
   main
     display: flex
     flex-flow: row wrap
     padding: $tiny-unit
     .section
-      background-color: lighten($app-chrome, 4%)
+      display: flex
+      flex-direction: column
+      background-color: $section-bg
       border: 1px solid $app-chrome
       margin: $micro-unit
       min-width: $hero-unit
-      height: $hero-unit
+      min-height: $hero-unit
+      height: 100%
       .section-heading
-        height: $small-unit
         background-color: $section-heading-bg
         width: 100%
         display: flex
+        border-bottom: 4px solid lighten($app-accent, 14%)
         align-items: center
         flex-direction: column
         h3
           color: $section-heading-font-color
       .section-body
-        padding: $micro-unit
-footer
-  small
-    color: lighten($app-font-color, 36%)
-  padding: $micro-unit
-  background-color: $info
+        padding: $tiny-unit
+  footer
+    small
+      color: lighten($app-font-color, 36%)
+    padding: $micro-unit
+    background-color: lighten($app-bg, 1%)
 
 // common
 .divider
@@ -89,41 +132,52 @@ $iggy-font-size: 16pt
   font-size: $iggy-font-size
 
 .iggy-container
-  height: $hero-unit - $small-unit
+  display: flex
+  flex: 1
   background-color: $iggy-term-bg
   @include iggy-font
   .iggy
     display: flex
+    flex: 1
     flex-direction: column
     .spacer
       width: 100%
       min-height: 1px
-      flex-grow: 1
       background-color: $app-chrome
     form
       padding: $micro-unit
-      align-items: flex-end
+      max-width: $hero-unit
+      display: flex
+      align-items: center
+      justify-content: space-between
+      margin-top: auto
       input[type='text']
         @include iggy-font
-        height: $small-unit - $micro-unit
         background-color: transparent
         color: $iggy-font-color
         font-family: $iggy-font
+        font-weight: bolder
+        font-size: 24pt
         margin: 0
-        width: 100%
+        width: $large-unit
+        height: $medium-unit
       button
         @include iggy-font
         font-family: $iggy-font
-        width: $small-unit
-        height: $small-unit
-        background-color: transparent
-        color: $iggy-font-color
+        width: $large-unit
+        height: $medium-unit
+        background-color: $accent
+        color: $info
         margin: $micro-unit
+      small
+        font-size: 10pt
         width: 50%
     .user-query
+      padding: $micro-unit
       max-width: $hero-unit
       overflow-wrap: break-word
     .system-response
+      padding: $micro-unit
       max-width: $hero-unit
       overflow-wrap: break-word
       font-weight: bolder
