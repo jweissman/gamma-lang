@@ -71,4 +71,15 @@ describe Igloo do
     rc(vm.store('b', GInt[2]))
     expect(rc(vm.div('c', 'a', 'b'))).to eq(Result[GInt[2], "c is now 2"])
   end
+
+  it 'should call builtins' do
+    rc(vm.store('a', GInt[1234]))
+    expect(
+      rc(vm.call_builtin('puts', ['a']))
+    ).to eq(
+      Result[GNothing[], "Executed builtin method puts"]
+    )
+  end
+
+  xit 'should define functions'
 end
