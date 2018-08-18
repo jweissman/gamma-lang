@@ -5,15 +5,6 @@
 version: 2
 
 #
-# Deploy to Heroku
-#
-deployment:
-  production:
-    branch: master
-    heroku:
-      appname: gamma-lang
-
-#
 # Tasks
 #
 jobs:
