@@ -48,5 +48,9 @@ describe Lang do
       expect(geval('1 + ( 2 * 1 ) + 3 / ( 3 * 1 ) + 1')).to eq(GInt[5]) # 1 + 2 + 1 + 1
     end
 
+    it 'should call builtins' do
+      # no side effect, returns Nothing
+      expect(geval('puts(1,2,3)')).to eq(GNothing[])
+    end
   end
 end

@@ -61,6 +61,18 @@ module Gamma
         three_register_op('/', dest, left, right)
       end
 
+      def call_builtin(method_name, arg_registers)
+        case method_name.to_sym
+        when :puts then
+          arg_registers.map do |arg_register|
+            puts store.get({ key: arg_register }).inspect
+          end
+          Result[GNothing[], 'Printed values to stdout']
+        else
+          raise "No builtin method #{method_name}"
+        end
+      end
+
       protected
 
       def three_register_op(op, dest, left, right)

@@ -48,6 +48,11 @@ module Gamma
         when Assign then
           id, rhs = *ast_node.contents
           derive_commands(rhs, destination_register: id)
+        when Funcall then
+          derive_funcall(
+            ast_node,
+            destination_register: destination_register
+          )
         else
           raise "Implement commands for node type #{ast_node.class.name.split('::').last}"
         end
@@ -68,9 +73,31 @@ module Gamma
         when '*' then vm.mult(destination_register, left_operand_register, tmp_r)
         when '/' then vm.div(destination_register, left_operand_register, tmp_r)
         else
-          raise "Implement codegen derivation for binary operation #{op}"
+          raise "No such builtin binary operation #{op}"
         end
         cmds
+      end
+
+      def derive_funcall(ast_node, destination_register:)
+        ident, arglist = *ast_node.contents
+        cmds = []
+        method = ident.contents.to_s
+
+        # lookup builtins
+        if vm.builtin?(ident.contents.to_s)
+          # reify args
+          reified_arg_tmp_rs = arglist.map { make_temp_id }
+
+          cmds += arglist.zip(reified_arg_tmp_rs).flat_map do |arg, tmp_r|
+            derive_commands(arg, destination_register: tmp_r)
+          end
+
+          cmds.push(vm.call_builtin(method, reified_arg_tmp_rs))
+
+          return cmds
+        else
+          raise "No builtin method #{ident.contents}"
+        end
       end
 
       # temp helper?

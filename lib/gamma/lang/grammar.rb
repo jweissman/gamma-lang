@@ -13,7 +13,8 @@ module Gamma
 
 
       rule(:stmt) { add_exp |
-                    eq_exp }
+                    eq_exp |
+                    funcall }
 
       #
       # arithmetic rules
@@ -37,6 +38,14 @@ module Gamma
       rule(:eq_op)    { match['='].as(:op) >> space? }
 
       #
+      # function calls
+      #
+
+      rule(:funcall) { ident.as(:func) >> lparens >> space? >> arglist.maybe.as(:arglist) >> space? >> rparens >> space? }
+
+      rule(:arglist) { expression.as(:arg) >> (comma >> space? >> expression.as(:arg)).repeat }
+
+      #
       # grammar parts
       #
 
@@ -48,19 +57,20 @@ module Gamma
 
       rule(:integer)  { digit.repeat(1).as(:i) >> space? }
 
-      rule(:ident) { ((alpha | underscore).repeat(1) >> (alpha | digit | underscore).repeat).as(:id) >> space? }
+      rule(:ident)    { ((alpha | underscore).repeat(1) >> (alpha | digit | underscore).repeat).as(:id) >> space? }
 
       #
       # 1 char rules
       #
 
-      rule(:space)  { match['\s'].repeat }
-      rule(:space?) { space.maybe }
-      rule(:digit)  { match['0-9'] }
-      rule(:lparens) { match['('] }
-      rule(:rparens) { match[')'] }
-      rule(:alpha) { match['a-zA-Z'] }
+      rule(:space)      { match['\s'].repeat }
+      rule(:space?)     { space.maybe }
+      rule(:digit)      { match['0-9'] }
+      rule(:lparens)    { match['('] }
+      rule(:rparens)    { match[')'] }
+      rule(:alpha)      { match['a-zA-Z'] }
       rule(:underscore) { match['_'] }
+      rule(:comma)      { match[','] }
 
     end
   end

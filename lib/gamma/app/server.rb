@@ -1,9 +1,12 @@
-require 'gamma/lang'
 require 'sinatra'
+require 'gamma/lang'
+require_relative 'helpers/capture_stdout'
 
 module Gamma
   module App
     class Server < Sinatra::Base
+      include CaptureStdout
+
       get '/' do
         puts 'hi there!'
         erb :index
@@ -15,13 +18,17 @@ module Gamma
 
       get '/geval' do
         @input = params['user-input']
-        @result = begin
-                    Gamma::Lang.evaluate(@input).ret_value.inspect
-                  rescue => ex
-                    "ERR: #{ex.message}"
-                  end
+        @output = ''
+        begin
+          @output = with_captured_stdout do
+            @result = Gamma::Lang.evaluate(@input).ret_value.inspect
+          end
+        rescue => ex
+          "ERR: #{ex.message}"
+        end
         puts "you said #{@input}"
         puts "iggy said #{@result}"
+        puts "stdout was '#{@output}'"
         erb :index
       end
 

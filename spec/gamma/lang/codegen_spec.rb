@@ -84,5 +84,17 @@ describe Gamma::Lang::Codegen do
         Add[['_','_','t1']]
       ])
     end
+
+    it 'derives funcalls' do
+      ast = Funcall[[
+        Ident[:puts],
+        [IntLiteral[1]]
+      ]]
+
+      expect(subject.derive(ast)).to eq([
+        StoreDictionaryKey[['t1', GInt[1]]],
+        CallBuiltin[['puts', ['t1']]]
+      ])
+    end
   end
 end

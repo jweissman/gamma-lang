@@ -15,6 +15,10 @@ describe Gamma::Lang::Transform do
     expect(subject).to transform(i: '1234').into(IntLiteral[1234])
   end
 
+  it 'unwraps left-operand ' do
+    expect(subject).to transform(l: 'operand').into('operand')
+  end
+
   it 'transforms operations' do
     expect(subject).to transform(
       op: 'some-operation',
@@ -33,11 +37,6 @@ describe Gamma::Lang::Transform do
       Assign[['abc', '3+5']]
     )
   end
-
-  it 'unwraps left-operand ' do
-    expect(subject).to transform(l: 'operand').into('operand')
-  end
-
 
   describe 'arithmetic' do
     it 'transforms arithmetic expressions' do
@@ -70,6 +69,32 @@ describe Gamma::Lang::Transform do
             IntLiteral[2],
             Operation[['*', IntLiteral[3]]]
           ]]]]
+        ]]
+      )
+    end
+  end
+
+  describe 'function calls' do
+    it 'transforms a function call' do
+      tree = {
+        :func=>{:id=>"puts"},
+        :arglist=>[
+          {:arg=>{:i=>"1"}},
+          {:arg=>{:i=>"2"}},
+          {:arg=>[{:l=>{:i=>"3"}},{:op=>"+", :r=>{:i=>"4"}}]},
+          {:arg=>{:i=>"5"}}
+        ]
+      }
+
+      expect(subject).to transform(tree).into(
+        Funcall[[
+          Ident[:puts],
+          [
+            IntLiteral[1],
+            IntLiteral[2],
+            Sequence[[IntLiteral[3], Operation[["+", IntLiteral[4]]]]],
+            IntLiteral[5]
+          ]
         ]]
       )
     end

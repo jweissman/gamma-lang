@@ -8,6 +8,14 @@ module Gamma
   # interactive gamma interpreter (iggy)
   #
   class Iggy
+    PRIMARY = '76395D'  # cosmic
+    ACCENT  = '343d3f'  # outer-space
+    WARN    = 'fdf039'  # golden fizz
+    INFO    = 'eaeaea'  # gallery
+    # ERROR
+    #
+    def debug?; true end
+
     def interact!
       greet!
       readline(
@@ -19,14 +27,18 @@ module Gamma
     protected
 
     def iggy
-      Paint['iggy', 'blue', :bright]
+      Paint['iggy', PRIMARY, :bright]
+    end
+
+    def gamma
+      Paint['GAMMA', INFO, :bright]
     end
 
     def greet!
       puts
-      puts "  Interactive Gamma Interpreter (#{iggy})"
+      puts "  Interactive #{gamma} Interpreter (#{iggy})"
       puts
-      puts "   Welcome!"
+      puts "  -> Welcome!"
       puts
     end
 
@@ -42,7 +54,7 @@ module Gamma
     end
 
     def reply_prefix
-      Paint[' -> ', '#eaeaea']
+      Paint['   ->', INFO]
     end
 
     private
@@ -53,19 +65,20 @@ module Gamma
         begin
           rsp = interpret.call(buf)
         rescue => ex
-          puts "(An unexpected error occurred!)"
+          puts Paint["An unexpected error occurred: #{ex.message}", WARN]
+          puts ex.backtrace if debug?
           # fake error obj?
-          rsp = Gamma::VM::Result[nil, "Error! #{ex.message}"]
+          # rsp = "Error! #{ex.message}"
         end
 
         if rsp.is_a?(Gamma::VM::Result)
           ret, comment = rsp.to_a
-          print(reply_prefix, ret.inspect, " "*(20-ret.inspect.length), "# ", comment, "\n")
-        else
-          # something went wrong, but... we have no context :X
-          puts "---> An unexpected error occurred: #{rsp}"
+          reply = Paint[ret.inspect, PRIMARY, :bright]
+          puts("#{reply_prefix} #{reply}")
+          puts
+          puts('   ' + Paint["#{comment}.", PRIMARY])
+          puts
         end
-        # print(reply_prefix, rsp.inspect, "\n")
       end
     end
   end
