@@ -31,20 +31,28 @@
           <div class='divider'></div>
           <div class='iggy-container'>
             <div class='iggy'>
-              <div class='user-query'>
-                $ <%= @input if @input %>
+              <div class='results-container'>
+                <% if @input && !@input.empty? %>
+                  <div class='user-query'>
+                    $
+                    <%= @input %>
+                  </div>
+                  <div class='spacer'></div>
+                <% end %>
+                <% if @result %>
+                  <div class='system-response'>
+                    <span class='iggy-span'>Iggy:</span>
+                    <%= @result %>
+                  </div>
+                  <div class='spacer'></div>
+                <% end %>
+                <% if @output && !@output.empty? %>
+                  <div class='system-stdout'>
+                    <%= "STDOUT: #{@output}" %>
+                  </div>
+                  <div class='spacer'></div>
+                <% end %>
               </div>
-              <div class='spacer'></div>
-              <div class='system-response'>
-                <%= "Iggy: #{@result}" if @result %>
-              </div>
-              <% if @output && !@output.empty? %>
-                <div class='spacer'></div>
-                <div class='system-stdout'>
-                  <%= "STDOUT: #{@output}" %>
-                </div>
-              <% end %>
-              <div class='spacer'></div>
               <div class='flow-fill'></div>
               <form action='/geval'>
                 <input type='text' name='user-input' placeholder='2+3*4' />

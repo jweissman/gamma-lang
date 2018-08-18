@@ -29,10 +29,8 @@ $congo: #553b36
 $primary:   $blossom
 $accent:    $outer-space
 $secondary: $cerulean
-//cosmic
-//
 $warn:      $golden-fizz
-$info:      lighten($accent, 72%) //gallery
+$info:      lighten($accent, 72%)
 // $success: $cerulean
 // $error: ...
 
@@ -49,18 +47,18 @@ $info-dark: darken($info, $offset-percent * 2)
 
 // context map
 
-$app-bg: $info //lighten(desaturate($primary, 30%), 30%)
-$app-chrome: $info-dark
+$app-bg: $info
+$app-chrome: transparentize($info-dark, 0.4)
 $app-accent: $accent-light
 $app-font-color: desaturate($accent-light, $offset-percent)
 $app-font-stack: Helvetica, Times
 
-$hero-bg: $info-light
+$hero-bg: transparentize(white, 0.8)
 $hero-accent: $primary
 
-$section-heading-font-color: lighten(desaturate($primary-light, $offset-percent), $offset-percent)
+$section-heading-font-color: saturate($primary-light, 50%)
 $section-bg: $info-light
-$section-heading-bg: $accent-light
+$section-heading-bg: $app-accent
 
 html
   background-color: $app-bg
@@ -143,7 +141,9 @@ $iggy-font-size: 16pt
     .spacer
       width: 100%
       min-height: 1px
-      background-color: $app-chrome
+      background-color: transparentize($app-chrome, 0.4)
+      margin-top: $tiny-unit
+      margin-bottom: $tiny-unit
     form
       padding: $micro-unit
       max-width: $hero-unit
@@ -166,18 +166,24 @@ $iggy-font-size: 16pt
         font-family: $iggy-font
         width: $large-unit
         height: $medium-unit
-        background-color: $accent
+        background-color: darken($secondary, 2%)
         color: $info
         margin: $micro-unit
       small
         font-size: 10pt
         width: 50%
-    .user-query
-      padding: $micro-unit
-      max-width: $hero-unit
-      overflow-wrap: break-word
-    .system-response
-      padding: $micro-unit
-      max-width: $hero-unit
-      overflow-wrap: break-word
-      font-weight: bolder
+    .results-container
+      margin: $tiny-unit
+      padding: $tiny-unit
+      // border: 1px dotted $app-chrome
+      .user-query
+        margin: $micro-unit
+        max-width: $hero-unit
+        overflow-wrap: break-word
+      .system-response
+        margin: $micro-unit
+        max-width: $hero-unit
+        overflow-wrap: break-word
+        font-weight: bolder
+        .iggy-span
+          color: $secondary
