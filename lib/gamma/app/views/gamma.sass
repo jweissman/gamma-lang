@@ -61,6 +61,7 @@ $section-bg: $info-light
 $section-heading-bg: $app-accent
 
 html
+  font-size: 125%
   background-color: $app-bg
   color: $app-font-color
   font-family: $app-font-stack
@@ -173,17 +174,30 @@ $iggy-font-size: 16pt
         font-size: 10pt
         width: 50%
     .results-container
+      display: flex
+      flex-direction: column
       margin: $tiny-unit
       padding: $tiny-unit
+      > div
+        margin: $micro-unit
+        max-width: $hero-unit
+        overflow-wrap: break-word
       // border: 1px dotted $app-chrome
       .user-query
-        margin: $micro-unit
-        max-width: $hero-unit
-        overflow-wrap: break-word
+        font-weight: bold
       .system-response
-        margin: $micro-unit
-        max-width: $hero-unit
-        overflow-wrap: break-word
         font-weight: bolder
         .iggy-span
           color: $secondary
+      .flow-fill
+        flex: 1
+      .system-stdout
+        background-color: black
+        color: white
+        font-weight: bold
+        border-radius: $small-unit
+        border: 1px solid gray
+        padding: $small-unit
+        min-height: $medium-unit
+        display: flex
+        justify-content: space-between

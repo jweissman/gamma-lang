@@ -46,9 +46,12 @@
                   </div>
                   <div class='spacer'></div>
                 <% end %>
+                <div class='flow-fill'></div>
                 <% if @output && !@output.empty? %>
                   <div class='system-stdout'>
-                    <%= "STDOUT: #{@output}" %>
+                    <%= "> #{@output}" %>
+                    <br/>
+                    <small style='color: gray'>(stdout)</small>
                   </div>
                   <div class='spacer'></div>
                 <% end %>

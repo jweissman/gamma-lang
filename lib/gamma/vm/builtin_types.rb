@@ -15,7 +15,8 @@ module Gamma
         end
       end
 
-      # Double = Struct.new(:value)
+      GFunction = Struct.new(:arglist, :statements) do
+      end
     end
   end
 end

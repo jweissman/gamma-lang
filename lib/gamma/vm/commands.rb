@@ -7,16 +7,22 @@ module Gamma
         end
       end
 
-      class Add < Command; end
-      class CallBuiltin < Command; end
-      class Copy < Command; end
-      class Div < Command; end
-      class IncrementDictionaryKey < Command; end
-      class Mult < Command; end
+      # reg
       class PutAnonymousRegister < Command; end
-      class RetrieveDictionaryKey < Command; end
       class StoreDictionaryKey < Command; end
+      class RetrieveDictionaryKey < Command; end
+      class Copy < Command; end
+
+      # arith
+      class Add < Command; end
       class Subtract < Command; end
+      class Div < Command; end
+      class Mult < Command; end
+
+      # fns
+      class CallBuiltin < Command; end
+      class DefineFunction < Command; end
+      class CallUserDefinedFunction < Command; end
     end
   end
 end

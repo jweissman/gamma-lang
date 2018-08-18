@@ -47,12 +47,6 @@ module Gamma
         Result[val, SET_MSG[key, val]]
       end
 
-      def increment_dictionary_key(key)
-        int = store.get({ key: key })
-        raise "Can't increment a non-Int" unless int.is_a?(GInt)
-        store_dictionary_key(key, GInt[int.value + 1])
-      end
-
       def add(dest, left, right)
         three_register_op('+', dest, left, right)
       end
@@ -82,7 +76,48 @@ module Gamma
         ]
       end
 
+      def define_function(method_name, arg_list, statements)
+        store_dictionary_key(method_name, GFunction[arg_list, statements])
+
+        Result[
+          method_name,
+          "Defined method #{method_name}"
+        ]
+      end
+
+      def call_user_defined_function(method_name, arg_registers)
+        # get_dictionary_key(
+        meth = store.get({ key: method_name })
+
+        raise "#{method_name} is not a GFunction!" unless meth.is_a?(GFunction)
+
+        arg_values = arg_registers.map do |key|
+          store.get({ key: key })
+        end
+
+        new_frame_vars = meth.arglist.zip(arg_values)
+
+        #
+        # execute meth.statements, with a new context/store that is JUST args
+        #
+        res = GNothing[]
+        with_new_frame do
+          # set args
+          new_frame_vars.map do |key, val|
+            store.set({ key: key, value: val })
+          end
+
+          # execute statements
+          meth.statements.each do |stmt|
+            res = handle(stmt)
+          end
+        end
+
+        res
+      end
+
       protected
+
 
       def three_register_op(op, dest, left, right)
         l = retrieve_dictionary_key(left).ret_value
@@ -102,7 +137,28 @@ module Gamma
       end
 
       private
-      def store; @store ||= Store.new({}) end
+      def store
+        current_frame[:store]
+        # @store ||= Store.new({})
+      end
+
+      def current_frame
+        @frame ||= base_frame
+      end
+
+      def base_frame
+        {
+          store: Store.new({})
+        }
+      end
+
+      def with_new_frame
+        old_frame = @frame
+        @frame = base_frame
+        result = yield
+        @frame = old_frame
+        result
+      end
     end
   end
 end

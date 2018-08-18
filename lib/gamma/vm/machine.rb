@@ -8,7 +8,7 @@ module Gamma
         @api ||= API.new(self)
       end
 
-      def handle(command, *args)
+      def handle(command)
         klass = command.class
         name = klass.name.demodulize
         command_method = name.underscore
