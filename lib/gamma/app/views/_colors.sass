@@ -2,15 +2,15 @@
 
 $offset-percent: 15%
 
-$base:       $razzmatazz // $cosmic
+$base:       transparentize($cosmic, 0.3)
 $complement: $cerulean
-$tertiary:   $emerald
+$tertiary:   lighten($emerald, 15%)
 
 // $mixed: mix($tertiary, $complement, 50%)
 
 
 $dark:       $outer-space //mix($base, black, 50%)
-$light:      white // $gallery //mix($complement, white, 50%) // lighten($complement, $offset-percent * 2) // $gallery
+$light:      $gallery //mix($complement, white, 50%) // lighten($complement, $offset-percent * 2) // $gallery
 
 // core
 $primary:   $complement
@@ -32,24 +32,24 @@ $accent-pale: desaturate($accent, $offset-percent)
 $secondary-light: lighten($secondary, $offset-percent / 2)
 $secondary-dark: darken($secondary, $offset-percent / 2)
 
-$info-light: lighten($info, $offset-percent / 2)
-$info-dark: darken($info, $offset-percent / 2)
+$info-light: lighten($info, $offset-percent * 2)
+$info-dark: darken($info, $offset-percent * 2)
 
 // context map
 
 $app-bg: $info
 
-$app-chrome: transparentize($secondary, 0.7)
+$app-chrome: transparentize($secondary, 0.75)
 $app-accent: $accent-light
 $app-font-color: $outer-space
 $app-font-stack: Helvetica, Times
 
 $header-bg: $info-light
 $header-font-color: $outer-space
-$header-splash-color: transparentize($app-accent, 0.35)
+$header-splash-color: transparentize($razzmatazz, 0.35)
 
 $section-heading-font-color: white // $primary-deep
-$section-bg: transparentize($accent, 0.95)
+$section-bg: $info-light //transparentize($info-light, 0.95)
 $section-heading-bg: $app-accent
 
 $footer-bg: lighten($app-bg, $offset-percent)
