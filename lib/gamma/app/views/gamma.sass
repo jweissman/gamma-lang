@@ -105,20 +105,34 @@ html
 @media all and (max-width: 600px)
   .gamma-app
     header
+      min-height: $small-unit
       h1
-        font-size: 32pt
+        font-size: 28pt
+        .gamma-wrapper::before
+          //content: "\03b3"
+          content: "\0393"
+          text-transform: none
+        .gamma
+          display: none
+        //.gamma
+        //  display: none
     footer
-      height: $medium-unit
-      font-size: 10pt
+      //height: $medium-unit
+      font-size: 16pt
+      flex-direction: column
+      > a
+        padding: $tiny-unit
+      > .separator
+        display: none
     .terminal-container
       padding-left: $micro-unit
       .terminal
         width: 92%
 
-@media all and (min-width: 1200px)
+@media all and (min-width: 1400px)
   .gamma-app
     header
       h1
-        font-size: 96pt
+        font-size: 116pt
     footer
-      font-size: 12pt
+      font-size: 14pt

@@ -9,7 +9,9 @@
       <header>
         <h1>
           <a href='/'>
-            <span class='gamma'>gamma</span>
+            <span class='gamma-wrapper'>
+              <span class='gamma'>gamma</span>
+            </span>
             <span class='splash'>lang</span>
           </a>
         </h1>
@@ -101,11 +103,11 @@
 
       <div class='divider'> </div>
       <footer>
-        <small>Retrieved at <%= Date.today %>.</small>
+        <small>Retrieved at <%= Date.today %></small>
         <div class='separator'></div>
-        <p>gamma-lang v<%= Gamma::Lang::VERSION %>.</p>
+        <p>gamma-lang v<%= Gamma::Lang::VERSION %></p>
         <div class='separator'></div>
-        <a href='https://github.com/jweissman/gamma-lang'>View source on Github</a>.
+        <a href='https://github.com/jweissman/gamma-lang'>View source on Github</a>
       </footer>
       <div class='divider'> </div>
     </div>

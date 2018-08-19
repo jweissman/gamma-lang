@@ -1,10 +1,10 @@
 @import _palette
 
 // core
-$primary:   $cerulean //burnt-orange //transparentize($burnt-orange, 0.8) //darken($cerulean, 3%)
-$secondary: lighten($outer-space, 5%)
-$accent:    darken($cosmic, 14%)
-$info:      darken($gallery, 4%)
+$primary:   $razzmatazz //cerulean
+$secondary: $outer-space
+$accent:    $cerulean //razzmatazz
+$info:      $gallery
 
 //////
 
@@ -18,8 +18,8 @@ $accent-light: lighten($accent, $offset-percent / 2)
 $accent-dark:  darken($accent, $offset-percent / 2)
 $accent-pale: desaturate($accent, $offset-percent)
 
-$secondary-light: lighten($accent, $offset-percent / 2)
-$secondary-dark: darken($accent, $offset-percent / 2)
+$secondary-light: lighten($secondary, $offset-percent / 2)
+$secondary-dark: darken($secondary, $offset-percent / 2)
 
 $info-light: lighten($info, $offset-percent / 2)
 $info-dark: darken($info, $offset-percent / 2)
@@ -28,7 +28,7 @@ $info-dark: darken($info, $offset-percent / 2)
 
 $app-bg: $info-light
 
-$app-chrome: transparentize($secondary-light, 0.8)
+$app-chrome: transparentize($secondary, 0.97)
 $app-accent: $accent-light
 $app-font-color: $outer-space //transparentize(black, 0.44)
 $app-font-stack: Helvetica, Times

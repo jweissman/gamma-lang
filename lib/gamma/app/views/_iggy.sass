@@ -27,9 +27,10 @@ $ask-iggy-button-color: $cerulean //secondary-light
       margin-top: $tiny-unit
       margin-bottom: $tiny-unit
     form
+      max-height: $small-unit
       // border: 1px solid $app-chrome
       background-color: transparentize($primary, 0.83)
-      padding: $small-unit
+      //padding: $small-unit
       //max-width: $hero-unit
       display: flex
       flex-direction: row
@@ -38,7 +39,7 @@ $ask-iggy-button-color: $cerulean //secondary-light
       margin-top: auto
       input[type='text']
         display: flex
-        flex-grow: 1
+        flex-grow: 6
         @include iggy-font
         background-color: transparentize(white, 0.5)
         color: $iggy-font-color
@@ -49,16 +50,16 @@ $ask-iggy-button-color: $cerulean //secondary-light
         //max-width: 30%
         // width: $large-unit
         // height: $medium-unit
-        padding: $micro-unit
+        //padding: $micro-unit
       button
         display: flex
-        flex-grow: 2
+        flex-grow: 1
         //flex: 1
         font-family: $app-font-stack
         font-size: 14pt
         font-weight: bolder
         //max-width: $large-unit
-        height: $medium-unit + $tiny-unit
+        //height: $medium-unit + $tiny-unit
         background-color: $ask-iggy-button-color
         color: $ask-iggy-font-color
         margin: 0

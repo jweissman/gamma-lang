@@ -11,12 +11,19 @@ module Gamma
         puts 'hi there!'
         @input = ''
         @output = \
-          "Welcome to <i>Gamma</i>\n" +
+          "\n" +
+          "<center>Welcome!</center>\n" +
           "\n" +
           "\n" +
-          " [ ] Have fun\n" +
-          " [ ] Try things\n" +
-          " [ ] Learn!";
+          "[&checkmark;] Have fun\n" +
+          "[ ] Try stuff\n" +
+          "[ ] Learn!" +
+          "\n" +
+          "\n" +
+          "\n" +
+          "\n" +
+          "<center><span style='color: white'>&gamma;</span>-lang #{Gamma::Lang::VERSION}</center>\n" +
+          "";
 
 
         erb :index
