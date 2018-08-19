@@ -1,13 +1,15 @@
 @import _colors
 
-$term-bg: $outer-space //lighten(saturate($outer-space, 16%), 4%)
-$term-font-color: $emerald
+$term-offset: 3%
 
-$term-header-bg: $info-light
+$term-header-bg: $gallery // darken($info-dark, $term-offset)
+$term-bg: darken($secondary, $term-offset)
+$term-font-color: saturate(lighten($success, $term-offset), 20%)
+
 $term-border-radius: $small-unit
-$term-footer-font-color: lighten(transparentize($primary-deep, 0.04), 28%)
+$term-footer-font-color: lighten(transparentize($primary-deep, 0.09), 30%)
 $term-footer-font-family: Open Sans
-$term-shadow: transparentize(black, 0.15)
+$term-shadow: transparentize(black, 0.25)
 $term-shadow-x: $micro-unit //* 2
 $term-shadow-y: $micro-unit //* 2
 
@@ -17,11 +19,13 @@ $term-shadow-y: $micro-unit //* 2
 .terminal-container
   display: flex
   flex-direction: row
+  margin: 0
+  padding: 0
   .terminal
     display: flex
     flex-direction: column
     font-weight: bold
-    width: 95%
+    width: 98%
     margin-left: $micro-unit
     .terminal-header
       background-color: $term-header-bg
@@ -37,7 +41,7 @@ $term-shadow-y: $micro-unit //* 2
       margin: 0
       color: $term-font-color
       min-height: $large-unit
-      padding-left: 3 * $tiny-unit
+      padding-left: 2 * $tiny-unit
       @include term-shadow
     .terminal-footer
       border-bottom-right-radius: $term-border-radius

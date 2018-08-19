@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Gamma-lang</title>
+    <link rel='stylesheet' href='/gamma.css' />
+  </head>
+  <body>
+    <div class='gamma-app'>
+      <%= erb :_header %>
+      <div class='divider'> </div>
+      <%= yield %>
+      <div class='divider'> </div>
+      <%= erb :_footer %>
+    </div>
+  </body>
+</html>

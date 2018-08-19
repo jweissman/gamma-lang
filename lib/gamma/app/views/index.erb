@@ -1,115 +1,50 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Gamma-lang</title>
-    <link rel='stylesheet' href='/gamma.css' />
-  </head>
-  <body>
-    <div class='gamma-app'>
-      <header>
-        <h1>
-          <a href='/'>
-            <span class='gamma-wrapper'>
-              <span class='gamma'>gamma</span>
-            </span>
-            <span class='splash'>lang</span>
-          </a>
-        </h1>
-      </header>
-      <div class='divider'> </div>
-      <main>
-        <div class='section'>
-          <div class='section-heading'>
-            <h3>getting started.</h3>
-          </div>
-          <div class='divider'></div>
-          <div class='section-body'>
-            <p>Gamma-lang is great.</p>
-            <p>We'll learn all about it soon.</p>
-            <p>For now, just skip to the next section.</p>
-          </div>
-        </div>
-
-        <div class='section' style='flex-grow: 10'>
-          <div class='section-heading'>
-            <h3>interactive gamma interpreter.</h3>
-          </div>
-          <div class='divider'></div>
-          <div class='iggy-container'>
-            <div class='iggy'>
-              <div class='results-container'>
-                <% if @input && !@input.empty? %>
-                  <div class='user-query'>
-                    <span class='user-name'>User</span> asked:
-                    <span class='user-request'><%= @input %></span>
-                  </div>
-                  <div class='spacer'></div>
-                <% end %>
-                <% if @result %>
-                  <div class='system-response'>
-                    <span class='iggy-name'>Iggy</span> replied:
-                    <span class='iggy-reply'><%= @result %></span>
-                  </div>
-                  <div class='spacer'></div>
-                <% end %>
-                <div class='flow-fill'></div>
-                <% if @output && !@output.empty? %>
-                  <div class='terminal-container'>
-                    <div class='terminal'>
-                      <div class='terminal-header'></div>
-                      <div class='terminal-body'>
-                        <pre><%= "#{@output}" %></pre>
-                      </div>
-                      <div class='terminal-footer'>
-                        <small>(stdout)</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div class='flow-fill'></div>
-                <% end %>
-              </div>
-              <div class='flow-fill'></div>
-              <form action='/geval'>
-                <input type='text' name='user-input' placeholder='2+3*4' />
-                <button type='submit'>Ask Iggy</button>
-                <% if (@input.length) > 20 %>
-                  <small>
-                    (Fullscreen editor coming soon!)
-                  </small>
-                <% end %>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class='section'>
-          <div class='section-heading'>
-            <h3>having fun.</h3>
-          </div>
-          <div class='divider'></div>
-          <div class='section-body'>
-            <p>This is very important! (Having fun, that is.)</p>
-            <div class='divider'></div>
-            <p>Some things you should try with iggy...</p>
-            <ul>
-              <li><pre>2+3*4</pre></li>
-              <li><pre>puts(1,2+3)</pre></li>
-            </ul>
-            <div class='divider'></div>
-            <p>Did you know? Gamma is great!</p>
-          </div>
-        </div>
-      </main>
-
-      <div class='divider'> </div>
-      <footer>
-        <small>Retrieved at <%= Date.today %></small>
-        <div class='separator'></div>
-        <p>gamma-lang v<%= Gamma::Lang::VERSION %></p>
-        <div class='separator'></div>
-        <a href='https://github.com/jweissman/gamma-lang'>View source on Github</a>
-      </footer>
-      <div class='divider'> </div>
+<main>
+  <div class='section'>
+    <div class='section-heading'>
+      <h3>getting started.</h3>
     </div>
-  </body>
-</html>
+    <div class='divider'></div>
+    <div class='section-body'>
+      <p>Gamma-lang is great.</p>
+      <p>We'll learn all about it soon.</p>
+      <p>For now, just skip to the next section.</p>
+    </div>
+  </div>
+
+  <div class='section' style='flex-grow: 10'>
+    <div class='section-heading'>
+      <h3>
+        interactive gamma interpreter.
+        <span class='section-actions'>
+          <a href='/iggy'>&plus;</a>
+        </span>
+      </h3>
+    </div>
+    <div class='divider'></div>
+    <%= erb :_iggy_container %>
+  </div>
+
+  <div class='section'>
+    <div class='section-heading'>
+      <h3>having fun.</h3>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body'>
+      <p>This is very important! (Having fun, that is.)</p>
+      <div class='divider'></div>
+      <p>Some things you should try with iggy...</p>
+      <ul>
+        <li>
+          <pre><a href='/geval?user-input=2%2B3%2A4'>2+3*4</a></pre>
+        </li>
+        <li>
+          <pre><a href='/geval?user-input=puts%281%2C2%2B3%29'>puts(1,2+3)</a></pre>
+        </li>
+      </ul>
+      <div class='divider'></div>
+      <p>Did you know? Gamma is great!</p>
+    </div>
+  </div>
+</main>
+
+

@@ -34,6 +34,7 @@ html
       font-size: 60pt
       text-transform: uppercase
       color: $header-font-color
+      // border-bottom: $tiny-unit solid $header-font-color
       .gamma
         margin: 0
         padding: 0
@@ -53,7 +54,7 @@ html
       flex-grow: 1
       background-color: $section-bg
       border: 1px solid $app-chrome
-      margin: $small-unit
+      margin: $micro-unit
       min-width: $medium-unit
       min-height: $large-unit
       border-radius: $micro-unit
@@ -68,6 +69,8 @@ html
         flex-direction: column
         h3
           color: $section-heading-font-color
+          a
+            color: $section-heading-font-color
       .section-body
         padding: $small-unit
         font-size: 12pt
@@ -125,7 +128,7 @@ html
       > .separator
         display: none
     .terminal-container
-      padding-left: $micro-unit
+      //padding-left: $micro-unit
       .terminal
         width: 92%
 
