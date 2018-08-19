@@ -1,0 +1,37 @@
+@import _colors
+$term-bg: transparent
+$term-header-bg: $info-light
+$term-border-radius: $small-unit
+$term-footer-font-color: transparentize($cerulean, 0.6)
+
+.terminal
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  font-weight: bold
+  .terminal-header
+    background-color: $term-header-bg
+    height: $small-unit
+    margin: 0
+    border-top-left-radius:  $term-border-radius
+    border-top-right-radius: $term-border-radius
+    border: $tiny-unit solid $term-header-bg
+
+  .terminal-body
+    background-color: black
+    margin: 0
+    color: lighten(green, 30%)
+    min-height: $medium-unit
+    display: flex
+    padding: $small-unit
+    justify-content: space-between
+
+  .terminal-footer
+    border-bottom-right-radius: $term-border-radius
+    border-bottom-left-radius:  $term-border-radius
+    background-color: black
+    color: $term-footer-font-color
+    padding: $small-unit
+    display: flex
+    flex-direction: column
+    align-items: center

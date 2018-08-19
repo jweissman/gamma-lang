@@ -8,8 +8,12 @@ module Gamma
       #
       root(:expression)
 
-      rule(:expression) { stmt |
+      rule(:expression) { # stmt_list |
+                          stmt |
                           value }
+
+      # rule(:stmt_list) {
+      # }
 
 
       rule(:stmt) { funcall |

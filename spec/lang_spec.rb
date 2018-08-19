@@ -56,5 +56,9 @@ describe Lang do
       expect(geval('puts(1+2,2+4,4+5)')).to eq(GNothing[])
       expect(geval('puts(puts(1))')).to eq(GNothing[])
     end
+
+    it 'should run multiple commands' do
+      expect(geval('a=1;b=2;a+b')).to eq(GInt[3])
+    end
   end
 end

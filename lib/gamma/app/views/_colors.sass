@@ -1,0 +1,44 @@
+@import _palette
+
+// core
+$primary:   $burnt-orange //transparentize($burnt-orange, 0.8) //darken($cerulean, 3%)
+$secondary: lighten($outer-space, 5%)
+$accent:    darken($cosmic, 14%)
+$info:      $gallery
+
+//////
+
+$offset-percent: 14%
+
+$primary-light: lighten($primary, $offset-percent / 2)
+$primary-dark: darken($primary, $offset-percent / 2)
+$primary-deep: saturate($primary-light, $offset-percent)
+
+$accent-light: lighten($accent, $offset-percent / 2)
+$accent-dark:  darken($accent, $offset-percent / 2)
+$accent-pale: desaturate($accent, $offset-percent)
+
+$secondary-light: lighten($accent, $offset-percent / 2)
+$secondary-dark: darken($accent, $offset-percent / 2)
+
+$info-light: lighten($info, $offset-percent / 2)
+$info-dark: darken($info, $offset-percent / 2)
+
+// context map
+
+$app-bg: $info-light
+
+$app-chrome: transparentize($secondary-light, 0.8)
+$app-accent: $accent-light
+$app-font-color: $outer-space //transparentize(black, 0.44)
+$app-font-stack: Helvetica, Times
+
+$header-bg: white //transparentize($secondary, 0.97)
+$header-font-color: gray //transparentize($outer-space, 0.35)
+$header-splash-color: transparentize($app-accent, 0.35)
+
+$section-heading-font-color: white // $primary-deep
+$section-bg: transparentize($accent, 0.95)
+$section-heading-bg: $app-accent
+
+$footer-bg: lighten($app-bg, $offset-percent)

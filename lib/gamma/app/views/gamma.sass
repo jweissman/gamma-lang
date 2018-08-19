@@ -1,102 +1,66 @@
-// units
-$micro-unit:  2px
-$tiny-unit:   4 * $micro-unit //12px
-$small-unit:  3 * $tiny-unit // 60px
-$medium-unit: 3 * $small-unit // 140px
-$large-unit:  3 * $medium-unit // 220px
-$hero-unit:   2 * $large-unit // 420px
-
-//// COLORS
-
-// achromatics
-$gallery: #eaeaea
-
-// pinks and purples
-$blossom: #dcb4bc
-$cosmic: #76395d
-
-// blues and purples
-$cerulean: #02a4d3
-$outer-space: #343d3f
-
-// yellows
-$golden-fizz: #fdf039
-
-// browns
-$congo: #553b36
-
-// core
-$primary:   $blossom
-$accent:    $outer-space
-$secondary: $cerulean
-$warn:      $golden-fizz
-$info:      lighten($accent, 72%)
-// $success: $cerulean
-// $error: ...
-
-//////
-
-$offset-percent: 4%
-
-$primary-light: lighten($primary, $offset-percent)
-$accent-light: lighten($accent, $offset-percent)
-$accent-dark:  darken($accent, $offset-percent)
-
-$info-light: lighten($info, $offset-percent * 2)
-$info-dark: darken($info, $offset-percent * 2)
-
-// context map
-
-$app-bg: $info
-$app-chrome: transparentize($info-dark, 0.4)
-$app-accent: $accent-light
-$app-font-color: desaturate($accent-light, $offset-percent)
-$app-font-stack: Helvetica, Times
-
-$hero-bg: transparentize(white, 0.8)
-$hero-accent: $primary
-
-$section-heading-font-color: saturate($primary-light, 50%)
-$section-bg: $info-light
-$section-heading-bg: $app-accent
+@import _units
+@import _colors
+@import _iggy
 
 html
-  font-size: 125%
+  font-size: 62.5%
   background-color: $app-bg
-  color: $app-font-color
-  font-family: $app-font-stack
   body
+    font-family: $app-font-stack
+    color: $app-font-color
     margin: 0
     padding: 0
+  a
+    text-decoration: none
+    cursor: normal
+    color: $app-font-color
 
 .gamma-app
   display: flex
   flex-direction: column
   header
+    .normal-screen
+      display: none
     display: flex
     flex-direction: column
-    background-color: $hero-bg
+    align-items: center
+    background-color: $header-bg
+    padding: 0
+    margin: 0
+    overflow: hidden
     h1
-      align-self: center
-      font-size: 96pt
+      display: flex
+      padding: 0
+      margin: 0
+      font-size: 63pt
       text-transform: uppercase
-      span
-        color: $hero-accent
+      color: $header-font-color
+      .gamma
+        margin: 0
+        padding: 0
+      .splash
+        margin: 0
+        padding: 0
+        color: $header-splash-color
 
   main
     display: flex
     flex-flow: row wrap
-    padding: $tiny-unit
+    padding: $small-unit
+
     .section
       display: flex
       flex-direction: column
       background-color: $section-bg
       border: 1px solid $app-chrome
-      margin: $micro-unit
+      margin: $small-unit
       min-width: $hero-unit
       min-height: $hero-unit
-      height: 100%
+      border-radius: $micro-unit
       .section-heading
+        border-top-left-radius: $micro-unit
+        border-top-right-radius: $micro-unit
+        font-size: 12pt
         background-color: $section-heading-bg
         width: 100%
         display: flex
@@ -106,12 +70,13 @@ html
         h3
           color: $section-heading-font-color
       .section-body
-        padding: $tiny-unit
+        padding: $small-unit
+        font-size: 14pt
   footer
     small
       color: lighten($app-font-color, 36%)
     padding: $micro-unit
-    background-color: lighten($app-bg, 1%)
+    background-color: $footer-bg
 
 // common
 .divider
@@ -119,85 +84,15 @@ html
   width: 100%
   background-color: $app-chrome
 
-// iggy
-$iggy-term-bg: transparent
-$iggy-font-color: $app-font-color
-$iggy-font: Courier New
-$iggy-font-size: 16pt
 
-@mixin iggy-font
-  font-family: $iggy-font
-  color: $iggy-font-color
-  font-size: $iggy-font-size
+@media all and (max-width: 600px)
+  .gamma-app
+    header
+      h1
+        font-size: 36pt
 
-.iggy-container
-  display: flex
-  flex: 1
-  background-color: $iggy-term-bg
-  @include iggy-font
-  .iggy
-    display: flex
-    flex: 1
-    flex-direction: column
-    .spacer
-      width: 100%
-      min-height: 1px
-      background-color: transparentize($app-chrome, 0.4)
-      margin-top: $tiny-unit
-      margin-bottom: $tiny-unit
-    form
-      padding: $micro-unit
-      max-width: $hero-unit
-      display: flex
-      align-items: center
-      justify-content: space-between
-      margin-top: auto
-      input[type='text']
-        @include iggy-font
-        background-color: transparent
-        color: $iggy-font-color
-        font-family: $iggy-font
-        font-weight: bolder
-        font-size: 24pt
-        margin: 0
-        width: $large-unit
-        height: $medium-unit
-      button
-        @include iggy-font
-        font-family: $iggy-font
-        width: $large-unit
-        height: $medium-unit
-        background-color: darken($secondary, 2%)
-        color: $info
-        margin: $micro-unit
-      small
-        font-size: 10pt
-        width: 50%
-    .results-container
-      display: flex
-      flex-direction: column
-      margin: $tiny-unit
-      padding: $tiny-unit
-      > div
-        margin: $micro-unit
-        max-width: $hero-unit
-        overflow-wrap: break-word
-      // border: 1px dotted $app-chrome
-      .user-query
-        font-weight: bold
-      .system-response
-        font-weight: bolder
-        .iggy-span
-          color: $secondary
-      .flow-fill
-        flex: 1
-      .system-stdout
-        background-color: black
-        color: white
-        font-weight: bold
-        border-radius: $small-unit
-        border: 1px solid gray
-        padding: $small-unit
-        min-height: $medium-unit
-        display: flex
-        justify-content: space-between
+@media all and (min-width: 1200px)
+  .gamma-app
+    header
+      h1
+        font-size: 128pt

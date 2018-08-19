@@ -7,7 +7,17 @@
   <body>
     <div class='gamma-app'>
       <header>
-        <h1>gamma<span>-lang</span></h1>
+        <div class='huge-screen'>
+          <h1>
+            <a href='#'>
+              <span class='gamma'>gamma</span>
+              <span class='splash'>lang</span>
+            </a>
+          </h1>
+        </div>
+        <div class='normal-screen'>
+          <h1>gamma-lang</h1>
+        </div>
       </header>
       <div class='divider'> </div>
 
@@ -34,7 +44,7 @@
               <div class='results-container'>
                 <% if @input && !@input.empty? %>
                   <div class='user-query'>
-                    $
+                    <span class='user-span'>User:</span>
                     <%= @input %>
                   </div>
                   <div class='spacer'></div>
@@ -48,10 +58,14 @@
                 <% end %>
                 <div class='flow-fill'></div>
                 <% if @output && !@output.empty? %>
-                  <div class='system-stdout'>
-                    <%= "> #{@output}" %>
-                    <br/>
-                    <small style='color: gray'>(stdout)</small>
+                  <div class='terminal'>
+                    <div class='terminal-header'></div>
+                    <div class='terminal-body'>
+                      <%= "#{@output}" %>
+                    </div>
+                    <div class='terminal-footer'>
+                      <small>(stdout)</small>
+                    </div>
                   </div>
                   <div class='spacer'></div>
                 <% end %>
@@ -77,6 +91,11 @@
           <div class='divider'></div>
           <div class='section-body'>
             <p>This is very important!</p>
+            <p>Things you can try with iggy:</p>
+            <ul>
+              <li><pre>2+3*4</pre></li>
+              <li><pre>puts(1,2+3)</pre></li>
+            </ul>
           </div>
         </div>
       </main>
@@ -89,7 +108,6 @@
           |
           View source on <a href='https://github.com/jweissman/gamma-lang'>Github</a>.
         </div>
-
       </footer>
       <div class='divider'> </div>
     </div>

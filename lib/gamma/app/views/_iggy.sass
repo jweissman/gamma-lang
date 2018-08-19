@@ -1,0 +1,79 @@
+@import _terminal
+
+// iggy
+$iggy-font-color: $app-font-color
+$iggy-font: Courier New
+$iggy-font-size: 16pt
+$ask-iggy-font-color: white
+$ask-iggy-button-color: $cerulean //secondary-light
+
+@mixin iggy-font
+  font-family: $iggy-font
+  color: $iggy-font-color
+  font-size: $iggy-font-size
+
+.iggy-container
+  display: flex
+  flex: 1
+  padding: $micro-unit
+  // background-color: $iggy-term-bg
+  @include iggy-font
+  .iggy
+    display: flex
+    flex: 1
+    flex-direction: column
+    .spacer
+      width: 100%
+      min-height: 1px
+      background-color: transparentize($app-chrome, 0.4)
+      margin-top: $tiny-unit
+      margin-bottom: $tiny-unit
+    form
+      padding: $micro-unit
+      max-width: $hero-unit
+      display: flex
+      align-items: center
+      justify-content: space-between
+      margin-top: auto
+      input[type='text']
+        @include iggy-font
+        background-color: transparentize(white, 0.5)
+        color: $iggy-font-color
+        font-family: $iggy-font
+        font-weight: bolder
+        font-size: 24pt
+        margin: 0
+        width: $large-unit
+        height: $medium-unit
+      button
+        font-family: $app-font-stack
+        font-size: 14pt
+        font-weight: bolder
+        width: $large-unit
+        height: $medium-unit + $tiny-unit
+        background-color: $ask-iggy-button-color
+        color: $ask-iggy-font-color
+        margin: 0
+      small
+        font-size: 10pt
+        width: 50%
+    .results-container
+      display: flex
+      flex-direction: column
+      margin: $tiny-unit
+      padding: $tiny-unit
+      > div
+        margin: $micro-unit
+        max-width: $hero-unit
+        overflow-wrap: break-word
+      .user-query
+        font-weight: bold
+        .user-span
+          color: $ask-iggy-button-color //darken($cerulean, 20%)
+      .system-response
+        font-weight: bolder
+        .iggy-span
+          color: $primary-deep
+      .flow-fill
+        flex: 1
+      .system-stdout
