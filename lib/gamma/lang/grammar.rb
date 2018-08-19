@@ -6,21 +6,16 @@ module Gamma
       #
       # base rules
       #
-      root(:expression)
+      root(:expression_list)
 
-      rule(:expression) { # stmt_list.as(:statements) |
-                          stmt |
-                          # stmt_list |
-                          # stmt_list |
-                          value }
-
-      rule(:stmt_list) { stmt >> stmt_delim >> stmt |
-                         stmt } #).repeat }
+      rule(:expression_list) { expr.as(:stmt) >> (stmt_delim >> expr.as(:stmt)).repeat(1) |
+                               expr }
 
 
-      rule(:stmt) { funcall |
+      rule(:expr) { funcall |
+                    eq_exp |
                     add_exp |
-                    eq_exp }
+                    value }
 
       rule(:stmt_delim) { match[';'] >> space? }
 
@@ -41,7 +36,7 @@ module Gamma
       # variables
       #
 
-      rule(:eq_exp) { ident >> eq_op >> expression.as(:eq_rhs) }
+      rule(:eq_exp) { ident >> eq_op >> expr.as(:eq_rhs) }
 
       rule(:eq_op)    { match['='].as(:op) >> space? }
 
@@ -51,13 +46,13 @@ module Gamma
 
       rule(:funcall) { ident.as(:func) >> lparens >> arglist.maybe.as(:arglist) >> rparens >> space? }
 
-      rule(:arglist) { expression.as(:arg) >> (comma >> space? >> expression.as(:arg)).repeat >> space? }
+      rule(:arglist) { expr.as(:arg) >> (comma >> space? >> expr.as(:arg)).repeat >> space? }
 
       #
       # grammar parts
       #
 
-      rule(:subexpression) { lparens >> expression >> rparens >> space? }
+      rule(:subexpression) { lparens >> expr >> rparens >> space? }
 
       rule(:value)    { integer |
                         ident |
