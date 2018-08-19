@@ -9,7 +9,16 @@ module Gamma
 
       get '/' do
         puts 'hi there!'
-        @input = ''; @output = ''
+        @input = ''
+        @output = \
+          "Welcome to <i>Gamma</i>\n" +
+          "\n" +
+          "\n" +
+          " [ ] Have fun\n" +
+          " [ ] Try things\n" +
+          " [ ] Learn!";
+
+
         erb :index
       end
 

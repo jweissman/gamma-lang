@@ -17,10 +17,9 @@ html
 
 .gamma-app
   display: flex
+  min-height: 100vh
   flex-direction: column
   header
-    .normal-screen
-      display: none
     display: flex
     flex-direction: column
     align-items: center
@@ -32,7 +31,7 @@ html
       display: flex
       padding: 0
       margin: 0
-      font-size: 63pt
+      font-size: 60pt
       text-transform: uppercase
       color: $header-font-color
       .gamma
@@ -46,23 +45,23 @@ html
   main
     display: flex
     flex-flow: row wrap
-    padding: $small-unit
-
+    flex-grow: 1
+    padding: $micro-unit
     .section
       display: flex
       flex-direction: column
+      flex-grow: 1
       background-color: $section-bg
       border: 1px solid $app-chrome
       margin: $small-unit
-      min-width: $hero-unit
-      min-height: $hero-unit
+      min-width: $medium-unit
+      min-height: $large-unit
       border-radius: $micro-unit
       .section-heading
         border-top-left-radius: $micro-unit
         border-top-right-radius: $micro-unit
         font-size: 12pt
         background-color: $section-heading-bg
-        width: 100%
         display: flex
         border-bottom: 4px solid lighten($app-accent, 14%)
         align-items: center
@@ -71,12 +70,22 @@ html
           color: $section-heading-font-color
       .section-body
         padding: $small-unit
-        font-size: 14pt
+        font-size: 12pt
   footer
+    display: flex
+    flex-direction: row
+    align-items: center
+    padding: 0
+    margin: 0
+    font-size: 12pt
+    .footer-links
+      padding: $small-unit
     small
       color: lighten($app-font-color, 36%)
-    padding: $micro-unit
+      padding: $small-unit
+    // padding: $small-unit
     background-color: $footer-bg
+    justify-self: flex-end
 
 // common
 .divider
@@ -84,15 +93,32 @@ html
   width: 100%
   background-color: $app-chrome
 
+.separator
+  min-height: $medium-unit
+  height: 100%
+  width: 1px
+  background-color: $app-chrome
+  margin-left: $small-unit
+  margin-right: $small-unit
+
 
 @media all and (max-width: 600px)
   .gamma-app
     header
       h1
-        font-size: 36pt
+        font-size: 32pt
+    footer
+      height: $medium-unit
+      font-size: 10pt
+    .terminal-container
+      padding-left: $micro-unit
+      .terminal
+        width: 92%
 
 @media all and (min-width: 1200px)
   .gamma-app
     header
       h1
-        font-size: 128pt
+        font-size: 96pt
+    footer
+      font-size: 12pt

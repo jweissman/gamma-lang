@@ -1,37 +1,65 @@
 @import _colors
-$term-bg: transparent
+
+$term-bg: lighten(saturate($outer-space, 16%), 4%)
+$term-font-color: lighten(green, 50%)
+
 $term-header-bg: $info-light
 $term-border-radius: $small-unit
-$term-footer-font-color: transparentize($cerulean, 0.6)
+$term-footer-font-color: lighten(transparentize($primary-deep, 0.04), 28%)
+$term-footer-font-family: Open Sans
+$term-shadow: transparentize(black, 0.15)
+$term-shadow-x: $micro-unit * 2
+$term-shadow-y: $micro-unit * 2
 
-.terminal
+@mixin term-shadow
+  box-shadow: $term-shadow-x $term-shadow-y $term-shadow-y $term-shadow
+
+.terminal-container
+  padding: $small-unit
   display: flex
-  flex-direction: column
-  justify-content: space-between
-  font-weight: bold
-  .terminal-header
-    background-color: $term-header-bg
-    height: $small-unit
-    margin: 0
-    border-top-left-radius:  $term-border-radius
-    border-top-right-radius: $term-border-radius
-    border: $tiny-unit solid $term-header-bg
-
-  .terminal-body
-    background-color: black
-    margin: 0
-    color: lighten(green, 30%)
-    min-height: $medium-unit
-    display: flex
-    padding: $small-unit
-    justify-content: space-between
-
-  .terminal-footer
-    border-bottom-right-radius: $term-border-radius
-    border-bottom-left-radius:  $term-border-radius
-    background-color: black
-    color: $term-footer-font-color
-    padding: $small-unit
+  flex-direction: row
+  //flex-grow: 100
+  //align-self: center
+  // align-self: center
+  .terminal
     display: flex
     flex-direction: column
-    align-items: center
+    font-weight: bold
+    width: 95%
+    margin-left: $micro-unit
+    .terminal-header
+      background-color: $term-header-bg
+      height: $small-unit
+      margin: 0
+      border-top-left-radius:  $term-border-radius
+      border-top-right-radius: $term-border-radius
+      border: $tiny-unit solid $term-header-bg
+      @include term-shadow
+    .terminal-body
+      padding: $medium-unit
+      padding-top: $nano-unit
+      font-size: 18pt
+      background-color: $term-bg
+      margin: 0
+      color: $term-font-color
+      min-height: $large-unit
+      //height: 100vh
+      //display: flex
+      //flex-grow: 1
+      //height: 100%
+      padding-left: 2 * $small-unit
+      // justify-content: space-between
+      @include term-shadow
+    .terminal-footer
+      border-bottom-right-radius: $term-border-radius
+      border-bottom-left-radius:  $term-border-radius
+      background-color: $term-bg
+      color: $term-footer-font-color
+      font-family: $term-footer-font-family
+      padding: $small-unit
+      display: flex
+      flex-direction: column
+      align-items: center
+      text-transform: uppercase
+      font-size: 10pt
+      @include term-shadow

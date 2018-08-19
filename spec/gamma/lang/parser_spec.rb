@@ -86,7 +86,8 @@ describe Gamma::Lang::Parser do
     end
 
     it 'parses assignment' do
-      expect(subject).to parse('a = 1')
+      expect(subject).to parse('a=1')
+      expect(subject).to parse('b = 1')
     end
   end
 
@@ -99,6 +100,12 @@ describe Gamma::Lang::Parser do
       expect(funcall).to parse('puts(1 + 2)')
       expect(funcall).to parse('puts(1, 2, 3 + 4)')
       expect(funcall).to parse('puts(1, 2, puts(3 + 4))')
+    end
+  end
+
+  describe 'blocks' do
+    it 'parses multiple statements' do
+      expect(parser).to parse('a=1;a+5')
     end
   end
 end

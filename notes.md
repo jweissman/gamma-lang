@@ -44,4 +44,10 @@ fib =
 
 
 
+---
+
+
+somehow, we're getting _ (anon reg) echoed to stdout when puts hits Nothing
+
+i.e., when it's asked to puts GNothing, it seems to end up printing whatever is in _
 

@@ -8,17 +8,21 @@ module Gamma
       #
       root(:expression)
 
-      rule(:expression) { # stmt_list |
+      rule(:expression) { # stmt_list.as(:statements) |
                           stmt |
+                          # stmt_list |
+                          # stmt_list |
                           value }
 
-      # rule(:stmt_list) {
-      # }
+      rule(:stmt_list) { stmt >> stmt_delim >> stmt |
+                         stmt } #).repeat }
 
 
       rule(:stmt) { funcall |
                     add_exp |
                     eq_exp }
+
+      rule(:stmt_delim) { match[';'] >> space? }
 
       #
       # arithmetic rules
@@ -45,15 +49,15 @@ module Gamma
       # function calls
       #
 
-      rule(:funcall) { ident.as(:func) >> lparens >> space? >> arglist.maybe.as(:arglist) >> space? >> rparens >> space? }
+      rule(:funcall) { ident.as(:func) >> lparens >> arglist.maybe.as(:arglist) >> rparens >> space? }
 
-      rule(:arglist) { expression.as(:arg) >> (comma >> space? >> expression.as(:arg)).repeat }
+      rule(:arglist) { expression.as(:arg) >> (comma >> space? >> expression.as(:arg)).repeat >> space? }
 
       #
       # grammar parts
       #
 
-      rule(:subexpression) { lparens >> space? >> expression >> space? >> rparens >> space? }
+      rule(:subexpression) { lparens >> expression >> rparens >> space? }
 
       rule(:value)    { integer |
                         ident |
@@ -75,7 +79,6 @@ module Gamma
       rule(:alpha)      { match['a-zA-Z'] }
       rule(:underscore) { match['_'] }
       rule(:comma)      { match[','] }
-
     end
   end
 end
