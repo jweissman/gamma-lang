@@ -12,13 +12,14 @@ module Gamma
         klass = command.class
         name = klass.name.demodulize
         command_method = name.underscore
-        puts "======== #{command_method}"
-        puts "   -> #{command.payload}"
+        if debug?
+          puts "[#{command_method}]"
+        end
         send command_method, *command.payload
       end
 
-      def trace?
-        true
+      def debug?
+        false
       end
     end
   end

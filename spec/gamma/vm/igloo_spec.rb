@@ -66,9 +66,9 @@ describe Igloo do
   it 'should call builtins' do
     rc(vm.store('a', GInt[1234]))
     expect(
-      rc(vm.call_builtin('puts', ['a']))
+      rc(vm.call_builtin('puts', ['a'], '_'))
     ).to eq(
-      Result[GNothing[], "Executed builtin method puts"]
+      Result[GNothing[], '_ is now (Nothing)'] # //"Executed builtin method puts"]
     )
   end
 
@@ -80,7 +80,7 @@ describe Igloo do
 
     rc(vm.store('x', GInt[35]))
     expect(
-      rc(vm.call_udf('double', ['x']))
+      rc(vm.call_udf('double', ['x'], '_'))
     ).to eq(
       Result[GInt[70], "_ is now 70"]
     )

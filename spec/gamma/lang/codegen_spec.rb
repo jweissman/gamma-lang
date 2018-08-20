@@ -34,11 +34,11 @@ describe Gamma::Lang::Codegen do
       ])
     end
 
-    # todo
     it 'assigns values' do
-      expect(subject.derive(Assign[[:xy, IntLiteral[10]]])).to eq([
-        StoreDictionaryKey[[:xy, GInt[10]]]
-      ])
+      actual = subject.derive(Assign[[:xy, IntLiteral[10]]])
+      expected = [StoreDictionaryKey[['xy', GInt[10]]]]
+      # binding.pry
+      expect(actual).to eq(expected)
     end
 
     it 'converts sequence into list of operations' do
@@ -93,7 +93,7 @@ describe Gamma::Lang::Codegen do
 
       expect(subject.derive(ast)).to eq([
         StoreDictionaryKey[['t1', GInt[1]]],
-        CallBuiltin[['puts', ['t1']]]
+        CallBuiltin[['puts', ['t1'], tmp]]
       ])
     end
   end
