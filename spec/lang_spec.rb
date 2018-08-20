@@ -60,7 +60,7 @@ describe Lang do
     end
 
     it 'should run multiple commands' do
-      expect(geval('a=1;b=2;a+b')).to eq(GInt[3])
+      expect(geval("a=1;b=2\na+b")).to eq(GInt[3])
     end
   end
 end

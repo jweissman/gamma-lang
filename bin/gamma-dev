@@ -5,12 +5,12 @@ if File.directory?(File.join(root,'.git'))
   Dir.chdir(root) do
     begin
       require 'bundler/setup'
-      require 'filewatcher'
-      require 'gamma/app'
-      Gamma::App.launch!
-      Filewatcher.new('lib/').watch do |filename, event|
-        Gamma::App.relaunch!
-      end
+      require 'gamma/util/process_monitor'
+      watch = Gamma::Util::ProcessMonitor.new(
+        shell_command: 'ruby lib/gamma/app.rb',
+        watch_directory: 'lib/'
+      )
+      watch.observe!
     rescue SystemExit
       Gamma::App.kill!
       raise '(hard exit)'

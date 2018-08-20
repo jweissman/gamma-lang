@@ -8,16 +8,16 @@ module Gamma
       #
       root(:expression_list)
 
-      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim >> expr.as(:stmt)).repeat(1)).as(:expr_list) |
+      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim.repeat >> expr.as(:stmt)).repeat(1)).as(:expr_list) |
                                expr }
-
 
       rule(:expr) { funcall |
                     eq_exp |
                     add_exp |
                     value }
 
-      rule(:stmt_delim) { match[';'] >> space? }
+      rule(:stmt_delim) { semicolon |
+                          match("\n") }
 
       #
       # arithmetic rules
@@ -44,7 +44,9 @@ module Gamma
       # function calls
       #
 
-      rule(:funcall) { ident.as(:func) >> lparens >> arglist.maybe.as(:arglist) >> rparens >> space? }
+      rule(:funcall) do
+        ident.as(:func) >> lparens >> arglist.maybe.as(:arglist) >> rparens >> space?
+      end
 
       rule(:arglist) { expr.as(:arg) >> (comma >> space? >> expr.as(:arg)).repeat >> space? }
 
@@ -60,13 +62,15 @@ module Gamma
 
       rule(:integer)  { digit.repeat(1).as(:i) >> space? }
 
-      rule(:ident)    { ((alpha | underscore).repeat(1) >> (alpha | digit | underscore).repeat).as(:id) >> space? }
+      rule(:ident) do
+        ((alpha | underscore).repeat(1) >> (alpha | digit | underscore).repeat).as(:id) >> space?
+      end
 
       #
       # 1 char rules
       #
 
-      rule(:space)      { match['\s'].repeat }
+      rule(:space)      { match['\s'].repeat(1) }
       rule(:space?)     { space.maybe }
       rule(:digit)      { match['0-9'] }
       rule(:lparens)    { match['('] }
@@ -74,6 +78,11 @@ module Gamma
       rule(:alpha)      { match['a-zA-Z'] }
       rule(:underscore) { match['_'] }
       rule(:comma)      { match[','] }
+      rule(:semicolon)  { match[';'] }
+      rule(:line_end) { crlf >> space.maybe }
+      rule :crlf do
+        match["\n"]
+      end
     end
   end
 end
