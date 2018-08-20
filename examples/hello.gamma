@@ -1,0 +1,10 @@
+square = (x) -> x * x
+double = (x) -> 2 * x
+
+val = 123
+
+puts(val)
+puts(double(val))
+puts(square(val))
+puts(double(square(val)))
+puts(square(double(val)))

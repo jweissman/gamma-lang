@@ -5,12 +5,8 @@ require_relative 'iggy'
 
 module Gamma
   class CLI < Thor
-    # about "gamma is a programming language"
-    # desc "command-line interface to Gamma environment"
-
     desc 'server', "launch the server"
     def server
-      # `ruby lib/app/server.rb`
       App::Server.run!
     end
 
@@ -18,6 +14,12 @@ module Gamma
     def iggy
       iggy = Iggy.new
       iggy.interact!
+    end
+
+    desc 'exec', "run a gamma file"
+    def exec(file)
+      program = File.read(file)
+      Gamma::Lang.evaluate(program)
     end
   end
 end
