@@ -47,6 +47,7 @@ gem 'sass'
 group :development, :test do
   # Use pry to debug
   gem 'pry'
+  gem 'coveralls', require: false
 end
 
 #

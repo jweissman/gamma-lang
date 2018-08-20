@@ -50,7 +50,7 @@ jobs:
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-
+            COVERALLS_REPO_TOKEN=$COVERALLS_TOKEN
             bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
@@ -73,6 +73,8 @@ jobs:
           name: Deploy Master to Heroku
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/gamma-lang.git master
+
+
 
 workflows:
   version: 2
