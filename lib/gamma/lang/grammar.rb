@@ -8,16 +8,16 @@ module Gamma
       #
       root(:expression_list)
 
-      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim.repeat >> expr.as(:stmt)).repeat(1)).as(:expr_list) |
-                               expr }
+      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim.repeat >> space? >> expr.as(:stmt)).repeat(1)).as(:expr_list) |
+                               expr >> stmt_delim.repeat }
 
       rule(:expr) { funcall |
-                    eq_exp |
+                    eq_exp  |
                     add_exp |
                     value }
 
       rule(:stmt_delim) { semicolon |
-                          match("\n") }
+                          match["\n"] }
 
       #
       # arithmetic rules
@@ -33,10 +33,16 @@ module Gamma
       rule(:mult_op)  { match['*/'].as(:op) >> space? }
 
       #
-      # variables
+      # assignment / variables
       #
 
-      rule(:eq_exp) { ident >> eq_op >> expr.as(:eq_rhs) }
+      rule(:fn_lit) do
+        tuple >> arrow >> expr.as(:body)
+      end
+
+      rule(:arrow) { match['-'] >> match['>'] >> space? }
+
+      rule(:eq_exp)   { ident >> eq_op >> expr.as(:eq_rhs) }
 
       rule(:eq_op)    { match['='].as(:op) >> space? }
 
@@ -45,8 +51,10 @@ module Gamma
       #
 
       rule(:funcall) do
-        ident.as(:func) >> lparens >> arglist.maybe.as(:arglist) >> rparens >> space?
+        ident.as(:func) >> tuple
       end
+
+      rule(:tuple) { lparens >> arglist.maybe.as(:arglist) >> rparens >> space? }
 
       rule(:arglist) { expr.as(:arg) >> (comma >> space? >> expr.as(:arg)).repeat >> space? }
 
@@ -58,6 +66,7 @@ module Gamma
 
       rule(:value)    { integer |
                         ident |
+                        fn_lit.as(:fn_lit) |
                         subexpression }
 
       rule(:integer)  { digit.repeat(1).as(:i) >> space? }

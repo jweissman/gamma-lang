@@ -32,6 +32,17 @@ module Gamma
         Sequence[expression_list]
       }
 
+      rule(fn_lit: subtree(:fn)) {
+        args = TransformHelper
+          .normalize_list(fn[:arglist])
+          .map { |it| it[:arg] }
+
+        FunLiteral[[
+          args,
+          fn[:body]
+        ]]
+      }
+
       rule(sequence(:seq)) { Sequence[seq] }
 
       def inspect; '(gamma-xform)' end

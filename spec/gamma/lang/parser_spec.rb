@@ -106,7 +106,19 @@ describe Gamma::Lang::Parser do
   describe 'blocks' do
     it 'parses multiple statements' do
       expect(parser).to parse('a=1;a+5')
-      p parser.parse('a=1;a+5')
+      expect(parser).to parse('a=1; a+5')
+    end
+
+    it 'parses (short) fn lit' do
+      fun_lit = '(x)->x*2'
+      expect(parser).to parse(fun_lit)
+      p parser.parse(fun_lit)
+    end
+
+    it 'should parse short fn lit assignment' do
+      defun = 'square = (x) -> x * 2'
+      expect(parser).to parse(defun)
+      p parser.parse(defun)
     end
   end
 end

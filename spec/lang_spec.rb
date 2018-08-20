@@ -62,5 +62,12 @@ describe Lang do
     it 'should run multiple commands' do
       expect(geval("a=1;b=2\na+b")).to eq(GInt[3])
     end
+
+    it 'should define functions' do
+      # expect(geval('square = x -> x * 2; square(2)')).to eq(GInt[4])
+      # first: square = x -> x * 2
+      # now: 'square=(x)->x*2'
+      expect(geval('square = (x) -> x * 2; square(2)')).to eq(GInt[4])
+    end
   end
 end

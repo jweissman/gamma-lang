@@ -13,6 +13,11 @@ module Gamma
     class Igloo < Machine
       include BuiltinTypes
 
+      def defined?(key)
+        # binding.pry
+        store.get({ key: key }) != GNothing[]
+      end
+
       protected
       # Magic Register Keys
       ANON_REG_KEY = '_'
@@ -28,6 +33,7 @@ module Gamma
           GNothing[]
         end
       }
+
 
       def copy(dst, src)
         store_dictionary_key(dst, store.get({ key: src.to_s }))

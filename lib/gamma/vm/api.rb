@@ -17,6 +17,12 @@ module Gamma
         VM::Igloo::BUILTIN_METHODS.keys.include?(method.to_sym)
       end
 
+      def defined?(method)
+        true
+        # machine.defined?(method)
+        # binding.pry
+      end
+
       protected
 
       def run!(cmd)

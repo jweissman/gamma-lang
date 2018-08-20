@@ -27,6 +27,9 @@ module Gamma
 
       class Funcall < Node
       end
+
+      class FunLiteral < Node
+      end
     end
   end
 end

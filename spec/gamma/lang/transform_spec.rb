@@ -116,4 +116,27 @@ describe Gamma::Lang::Transform do
       )
     end
   end
+
+  describe 'function literals' do
+    it 'transforms a function literal' do
+      tree = {
+        fn_lit: {
+          :arglist=>{:arg=>{:id=>"x"}},
+          :body=>[
+            {:l=>{:id=>"x"}},
+            {:op=>"*", :r=>{:i=>"2"}}
+          ]
+        }
+      }
+      expect(subject).to transform(tree).into(
+        FunLiteral[[
+          [Ident[:x]],
+          Sequence[[
+            Ident[:x],
+            Operation[['*', IntLiteral[2] ]]
+          ]]
+        ]]
+      )
+    end
+  end
 end
