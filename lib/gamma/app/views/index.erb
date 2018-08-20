@@ -16,7 +16,7 @@
       <h3>
         interactive gamma interpreter.
         <span class='section-actions'>
-          <a href='/iggy'>&plus;</a>
+          <a href='/iggy?user-input=<%= URI.encode(@input) %>'>&plus;</a>
         </span>
       </h3>
     </div>
@@ -31,8 +31,13 @@
     <div class='divider'></div>
     <div class='section-body'>
       <p>This is very important! (Having fun, that is.)</p>
-      <div class='divider'></div>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body'>
       <p>Some things you should try with iggy...</p>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body' style='background-color: #f3f6f9'>
       <ul>
         <li>
           <pre><a href='/geval?user-input=2%2B3%2A4'>2+3*4</a></pre>
@@ -41,7 +46,9 @@
           <pre><a href='/geval?user-input=puts%281%2C2%2B3%29'>puts(1,2+3)</a></pre>
         </li>
       </ul>
-      <div class='divider'></div>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body'>
       <p>Did you know? Gamma is great!</p>
     </div>
   </div>

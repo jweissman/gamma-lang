@@ -26,12 +26,15 @@ $ask-iggy-button-color: $cerulean
       margin-top: $tiny-unit
       margin-bottom: $tiny-unit
     form
-      max-height: $small-unit
+      max-height: 2*$small-unit
+      min-height: 2*$small-unit
       background-color: transparentize($primary, 0.83)
       display: flex
       flex-direction: row
       margin-top: auto
-      input[type='text']
+      padding: $tiny-unit
+      border-top: 2px dotted $app-chrome
+      .user-typing
         display: flex
         flex-grow: 6
         @include iggy-font
@@ -50,9 +53,6 @@ $ask-iggy-button-color: $cerulean
         background-color: $ask-iggy-button-color
         color: $ask-iggy-font-color
         margin: 0
-      small
-        font-size: 10pt
-        width: 50%
     .results-container
       flex-grow: 1
       display: flex
