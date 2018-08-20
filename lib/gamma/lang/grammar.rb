@@ -8,7 +8,7 @@ module Gamma
       #
       root(:expression_list)
 
-      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim.repeat >> space? >> expr.as(:stmt)).repeat(1)).as(:expr_list) |
+      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim.repeat >> space? >> expr.as(:stmt) >> stmt_delim.repeat).repeat(1)).as(:expr_list) |
                                expr >> stmt_delim.repeat }
 
       rule(:expr) { funcall |
