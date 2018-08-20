@@ -7,7 +7,11 @@ module Gamma
 
       def derive(ast)
         # derive code for ast, with result in _
-        derive_commands(ast, destination_register: VM::Igloo::ANON_REG_KEY)
+        derive_commands(ast, destination_register: underscore_reg)
+      end
+
+      def underscore_reg
+        VM::Igloo::ANON_REG_KEY
       end
 
       protected
@@ -34,6 +38,13 @@ module Gamma
             # just put the value directly in the target register
             vm.store(destination_register, vm_int)
           ]
+        when FunLiteral then
+          args, body = *ast_node.contents
+          derived_body = derive_commands(body, destination_register: underscore_reg)
+          vm_func = VM::BuiltinTypes::GFunction[args.map(&:contents), derived_body]
+          [
+            vm.store(destination_register, vm_func)
+          ]
         when Sequence then
           # seq_target -- use dst as working register
           ast_node.contents.flat_map do |list_elem|
@@ -47,7 +58,7 @@ module Gamma
           )
         when Assign then
           id, rhs = *ast_node.contents
-          derive_commands(rhs, destination_register: id)
+          derive_commands(rhs, destination_register: id.to_s)
         when Funcall then
           derive_funcall(
             ast_node,
@@ -83,21 +94,21 @@ module Gamma
         cmds = []
         method = ident.contents.to_s
 
-        # lookup builtins
-        if vm.builtin?(ident.contents.to_s)
-          # reify args
-          reified_arg_tmp_rs = arglist.map { make_temp_id }
+        # reify args
+        reified_arg_tmp_rs = arglist.map { make_temp_id }
 
-          cmds += arglist.zip(reified_arg_tmp_rs).flat_map do |arg, tmp_r|
-            derive_commands(arg, destination_register: tmp_r)
-          end
-
-          cmds.push(vm.call_builtin(method, reified_arg_tmp_rs))
-
-          return cmds
-        else
-          raise "No builtin method #{ident.contents}"
+        cmds += arglist.zip(reified_arg_tmp_rs).flat_map do |arg, tmp_r|
+          derive_commands(arg, destination_register: tmp_r)
         end
+
+        # lookup builtins
+        if vm.builtin?(method)
+          cmds.push(vm.call_builtin(method, reified_arg_tmp_rs, destination_register))
+        else
+          cmds.push(vm.call_udf(method, reified_arg_tmp_rs, destination_register))
+        end
+
+        return cmds
       end
 
       # temp helper?

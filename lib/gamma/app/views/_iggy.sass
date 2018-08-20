@@ -1,0 +1,81 @@
+@import _terminal
+
+// iggy
+$iggy-font-color: $app-font-color
+$iggy-font: Courier New
+$iggy-font-size: 14pt
+$ask-iggy-font-color: white
+$ask-iggy-button-color: $cerulean
+
+@mixin iggy-font
+  font-family: $iggy-font
+  color: $iggy-font-color
+  font-size: $iggy-font-size
+
+.iggy-container
+  display: flex
+  flex: 1
+  @include iggy-font
+  .iggy
+    display: flex
+    flex: 1
+    flex-direction: column
+    .spacer
+      min-height: 1px
+      background-color: transparentize($app-chrome, 0.4)
+      margin-top: $tiny-unit
+      margin-bottom: $tiny-unit
+    form
+      max-height: 2*$small-unit
+      min-height: 2*$small-unit
+      background-color: transparentize($primary, 0.83)
+      display: flex
+      flex-direction: row
+      margin-top: auto
+      padding: $tiny-unit
+      border-top: 2px dotted $app-chrome
+      .user-typing
+        display: flex
+        flex-grow: 6
+        @include iggy-font
+        background-color: transparentize(white, 0.5)
+        color: $iggy-font-color
+        font-family: $iggy-font
+        font-weight: bolder
+        font-size: 14pt
+        margin: 0
+      button
+        display: flex
+        flex-grow: 2
+        font-family: $app-font-stack
+        font-size: 14pt
+        font-weight: bolder
+        background-color: $ask-iggy-button-color
+        color: $ask-iggy-font-color
+        margin: 0
+    .results-container
+      flex-grow: 1
+      display: flex
+      flex-direction: column
+      margin: 0
+      padding: 0
+      > div
+        margin: $micro-unit
+        overflow-wrap: break-word
+      .user-query
+        font-weight: bold
+        .user-name
+          color: $burnt-orange
+        .user-request
+          color: black
+          font-weight: bolder
+      .system-response
+        font-weight: bolder
+        .iggy-name
+          color: $ask-iggy-button-color //darken($cerulean, 20%)
+        .iggy-reply
+          color: black
+      .flow-fill
+        flex-grow: 1
+        display: flex
+      .system-stdout

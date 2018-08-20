@@ -1,0 +1,58 @@
+@import _colors
+
+$term-offset: 3%
+
+$term-header-bg: $gallery // darken($info-dark, $term-offset)
+$term-bg: darken($secondary, $term-offset)
+$term-font-color: saturate(lighten($success, $term-offset), 20%)
+
+$term-border-radius: $small-unit
+$term-footer-font-color: lighten(transparentize($primary-deep, 0.09), 30%)
+$term-footer-font-family: Open Sans
+$term-shadow: transparentize(black, 0.25)
+$term-shadow-x: $micro-unit //* 2
+$term-shadow-y: $micro-unit //* 2
+
+@mixin term-shadow
+  box-shadow: $term-shadow-x $term-shadow-y 1px $term-shadow
+
+.terminal-container
+  display: flex
+  flex-direction: row
+  margin: 0
+  padding: 0
+  .terminal
+    display: flex
+    flex-direction: column
+    font-weight: bold
+    width: 98%
+    margin-left: $micro-unit
+    .terminal-header
+      background-color: $term-header-bg
+      min-height: $small-unit
+      margin: 0
+      border-top-left-radius:  $term-border-radius
+      border-top-right-radius: $term-border-radius
+      border: $tiny-unit solid $term-header-bg
+      @include term-shadow
+    .terminal-body
+      font-size: 18pt
+      background-color: $term-bg
+      margin: 0
+      color: $term-font-color
+      min-height: $large-unit
+      padding-left: 2 * $tiny-unit
+      @include term-shadow
+    .terminal-footer
+      border-bottom-right-radius: $term-border-radius
+      border-bottom-left-radius:  $term-border-radius
+      background-color: $term-bg
+      color: $term-footer-font-color
+      font-family: $term-footer-font-family
+      padding: $small-unit
+      display: flex
+      flex-direction: column
+      align-items: center
+      text-transform: uppercase
+      font-size: 10pt
+      @include term-shadow

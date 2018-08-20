@@ -15,7 +15,11 @@ module Gamma
         end
       end
 
-      # Double = Struct.new(:value)
+      GFunction = Struct.new(:arglist, :statements) do
+        def inspect
+          "(lambda)"
+        end
+      end
     end
   end
 end

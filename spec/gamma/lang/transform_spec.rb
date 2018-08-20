@@ -99,4 +99,44 @@ describe Gamma::Lang::Transform do
       )
     end
   end
+
+  describe 'expression lists' do
+    it 'transforms a list of expressions' do
+      tree = {
+        expr_list: [
+          {:stmt=>{:id=>"a", :op=>"=", :eq_rhs=>{:i=>"1"}}},
+          {:stmt=>[{:l=>{:id=>"a"}}, {:op=>"+", :r=>{:i=>"5"}}]}
+        ]
+      }
+      expect(subject).to transform(tree).into(
+        Sequence[[
+          Assign[[ 'a', IntLiteral[1] ]],
+          Sequence[[Ident[:a], Operation[[ '+', IntLiteral[5] ]]]]
+        ]]
+      )
+    end
+  end
+
+  describe 'function literals' do
+    it 'transforms a function literal' do
+      tree = {
+        fn_lit: {
+          :arglist=>{:arg=>{:id=>"x"}},
+          :body=>[
+            {:l=>{:id=>"x"}},
+            {:op=>"*", :r=>{:i=>"2"}}
+          ]
+        }
+      }
+      expect(subject).to transform(tree).into(
+        FunLiteral[[
+          [Ident[:x]],
+          Sequence[[
+            Ident[:x],
+            Operation[['*', IntLiteral[2] ]]
+          ]]
+        ]]
+      )
+    end
+  end
 end

@@ -1,5 +1,6 @@
 module Gamma
   module Lang
+    class InterpreterError < StandardError; end
     class Interpreter
       def evaluate(str)
         matched = parser.parse(str)
@@ -9,7 +10,10 @@ module Gamma
           commands = codegen.derive(intermediate_ast)
           run_commands(commands)
         else
-          raise "Could not parse input string #{str}: #{matched.error}"
+          raise InterpreterError.new(
+            "Could not interpret input string #{str}: " +
+            "#{matched.error}"
+          )
         end
       end
 

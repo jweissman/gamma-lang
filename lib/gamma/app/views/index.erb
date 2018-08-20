@@ -1,94 +1,55 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Gamma-lang</title>
-    <link rel='stylesheet' href='/gamma.css' />
-  </head>
-  <body>
-    <div class='gamma-app'>
-      <header>
-        <h1>gamma<span>-lang</span></h1>
-      </header>
-      <div class='divider'> </div>
-
-      <main>
-        <div class='section'>
-          <div class='section-heading'>
-            <h3>getting started.</h3>
-          </div>
-          <div class='divider'></div>
-          <div class='section-body'>
-            <p>Gamma-lang is great.</p>
-            <p>We'll learn all about it soon.</p>
-            <p>For now, just skip to the next section.</p>
-          </div>
-        </div>
-
-        <div class='section'>
-          <div class='section-heading'>
-            <h3>interactive gamma interpreter.</h3>
-          </div>
-          <div class='divider'></div>
-          <div class='iggy-container'>
-            <div class='iggy'>
-              <div class='results-container'>
-                <% if @input && !@input.empty? %>
-                  <div class='user-query'>
-                    $
-                    <%= @input %>
-                  </div>
-                  <div class='spacer'></div>
-                <% end %>
-                <% if @result %>
-                  <div class='system-response'>
-                    <span class='iggy-span'>Iggy:</span>
-                    <%= @result %>
-                  </div>
-                  <div class='spacer'></div>
-                <% end %>
-                <% if @output && !@output.empty? %>
-                  <div class='system-stdout'>
-                    <%= "STDOUT: #{@output}" %>
-                  </div>
-                  <div class='spacer'></div>
-                <% end %>
-              </div>
-              <div class='flow-fill'></div>
-              <form action='/geval'>
-                <input type='text' name='user-input' placeholder='2+3*4' />
-                <button type='submit'>Ask Iggy</button>
-                <% if (@input.length + @output.length) > 18 %>
-                  <small>
-                    (Fullscreen editor coming soon!)
-                  </small>
-                <% end %>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class='section'>
-          <div class='section-heading'>
-            <h3>having fun.</h3>
-          </div>
-          <div class='divider'></div>
-          <div class='section-body'>
-            <p>This is very important!</p>
-          </div>
-        </div>
-      </main>
-
-      <div class='divider'> </div>
-      <footer>
-        <small>Retrieved at <%= Date.today %>.</small>
-        <div class='footer-links'>
-          gamma-lang v<%= Gamma::Lang::VERSION %>.
-          |
-          View source on <a href='https://github.com/jweissman/gamma-lang'>Github</a>.
-        </div>
-
-      </footer>
-      <div class='divider'> </div>
+<main>
+  <div class='section'>
+    <div class='section-heading'>
+      <h3>getting started.</h3>
     </div>
-  </body>
-</html>
+    <div class='divider'></div>
+    <div class='section-body'>
+      <p>Gamma-lang is great.</p>
+      <p>We'll learn all about it soon.</p>
+      <p>For now, just skip to the next section.</p>
+    </div>
+  </div>
+
+  <div class='section' style='flex-grow: 10'>
+    <div class='section-heading'>
+      <h3>
+        interactive gamma interpreter.
+        <span class='section-actions'>
+          <a href='/iggy?user-input=<%= URI.encode(@input) %>'>&plus;</a>
+        </span>
+      </h3>
+    </div>
+    <div class='divider'></div>
+    <%= erb :_iggy_container %>
+  </div>
+
+  <div class='section'>
+    <div class='section-heading'>
+      <h3>having fun.</h3>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body'>
+      <p>This is very important! (Having fun, that is.)</p>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body'>
+      <p>Some things you should try with iggy...</p>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body' style='background-color: #f3f6f9'>
+      <ul>
+        <li>
+          <pre><a href='/geval?user-input=2%2B3%2A4'>2+3*4</a></pre>
+        </li>
+        <li>
+          <pre><a href='/geval?user-input=puts%281%2C2%2B3%29'>puts(1,2+3)</a></pre>
+        </li>
+      </ul>
+    </div>
+    <div class='divider'></div>
+    <div class='section-body'>
+      <p>Did you know? Gamma is great!</p>
+    </div>
+  </div>
+</main>

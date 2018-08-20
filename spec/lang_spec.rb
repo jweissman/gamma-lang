@@ -45,7 +45,9 @@ describe Lang do
 
     it 'is resilient to whitespace' do
       expect(geval('(2*1) + 3')).to eq(GInt[5])
-      expect(geval('1 + ( 2 * 1 ) + 3 / ( 3 * 1 ) + 1')).to eq(GInt[5]) # 1 + 2 + 1 + 1
+
+      # i'm not sure i want this right now!
+      # expect(geval('1 + ( 2 * 1 ) + 3 / ( 3 * 1 ) + 1')).to eq(GInt[5]) # 1 + 2 + 1 + 1
     end
 
     it 'should call builtins' do
@@ -55,6 +57,15 @@ describe Lang do
       expect(geval('puts(1,2)')).to eq(GNothing[])
       expect(geval('puts(1+2,2+4,4+5)')).to eq(GNothing[])
       expect(geval('puts(puts(1))')).to eq(GNothing[])
+    end
+
+    it 'should run multiple commands' do
+      expect(geval("a=1;b=2\na+b")).to eq(GInt[3])
+    end
+
+    it 'should define functions' do
+      expect(geval('square = (x) -> x * 2; square(2)')).to eq(GInt[4])
+      expect(geval('square = (x) -> x * 2; square(square(4))')).to eq(GInt[16])
     end
   end
 end

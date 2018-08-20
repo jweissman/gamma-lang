@@ -1,0 +1,40 @@
+<div class='iggy-container'>
+  <div class='iggy'>
+    <div class='section-body results-container'>
+      <% if @input && !@input.empty? %>
+        <div class='user-query'>
+          <span class='user-name'>User</span> asked:
+          <span class='user-request'><%= @input %></span>
+        </div>
+        <div class='spacer'></div>
+      <% end %>
+      <% if @result %>
+        <div class='system-response'>
+          <span class='iggy-name'>Iggy</span> replied:
+          <span class='iggy-reply'><%= @result %></span>
+        </div>
+        <div class='spacer'></div>
+      <% end %>
+      <div class='flow-fill'></div>
+      <% if @output && !@output.empty? %>
+        <div class='terminal-container'>
+          <div class='terminal'>
+            <div class='terminal-header'></div>
+            <div class='terminal-body'>
+              <pre><%= "#{@output}" %></pre>
+            </div>
+            <div class='terminal-footer'>
+              <small>(stdout)</small>
+            </div>
+          </div>
+        </div>
+        <div class='flow-fill'></div>
+      <% end %>
+    </div>
+    <div class='flow-fill'></div>
+    <form action='<%= @iggy_form_action %>'>
+      <textarea name='user-input' class='user-typing'><%= @input %></textarea>
+      <button type='submit'>Ask Iggy</button>
+    </form>
+  </div>
+</div>

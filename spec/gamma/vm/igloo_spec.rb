@@ -28,15 +28,6 @@ describe Igloo do
     )
   end
 
-  it 'should increment a value' do
-    rc(vm.store('a', GInt[2]))
-    expect(rc(vm.increment('a'))).to eq(Result[
-      GInt[3],
-      "a is now 3"
-    ])
-    expect(rc(vm.retrieve('a'))).to eq(Result[GInt[3], "a is 3"])
-  end
-
   it 'should add integers' do
     rc(vm.store('a', GInt[2]))
     rc(vm.store('b', GInt[3]))
@@ -70,5 +61,28 @@ describe Igloo do
     rc(vm.store('a', GInt[4]))
     rc(vm.store('b', GInt[2]))
     expect(rc(vm.div('c', 'a', 'b'))).to eq(Result[GInt[2], "c is now 2"])
+  end
+
+  it 'should call builtins' do
+    rc(vm.store('a', GInt[1234]))
+    expect(
+      rc(vm.call_builtin('puts', ['a'], '_'))
+    ).to eq(
+      Result[GNothing[], '_ is now (Nothing)'] # //"Executed builtin method puts"]
+    )
+  end
+
+  it 'should define functions' do
+    rc(vm.defun('double', ['a'], [
+      vm.store('t1', GInt[2]),
+      vm.mult('_', 'a', 't1'),
+    ]))
+
+    rc(vm.store('x', GInt[35]))
+    expect(
+      rc(vm.call_udf('double', ['x'], '_'))
+    ).to eq(
+      Result[GInt[70], "_ is now 70"]
+    )
   end
 end
