@@ -4,8 +4,8 @@
 * [Documentation](http://rubydoc.info/gems/gamma-lang/frames)
 * [Email](mailto:jweissman1986 at gmail.com)
 
-[![Code Climate GPA](https://codeclimate.com/github//gamma-lang/badges/gpa.svg)](https://codeclimate.com/github//gamma-lang)
-
+[![Code Climate GPA](https://codeclimate.com/github/jweissman/gamma-lang/badges/gpa.svg)](https://codeclimate.com/github/jweissman/gamma-lang)
+[![Coverage Status](https://coveralls.io/repos/github/jweissman/gamma-lang/badge.svg)](https://coveralls.io/github/jweissman/gamma-lang)
 
 ## Description
 
