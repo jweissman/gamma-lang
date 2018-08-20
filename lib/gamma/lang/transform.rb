@@ -7,7 +7,10 @@ module Gamma
 
       rule(id: simple(:id)) { Ident[id.to_sym] }
       rule(i: simple(:int)) { IntLiteral[int.to_i] }
+
+      # should be Assign[[Ident]]... single we swallow id xform!
       rule(id: simple(:id), op: '=', eq_rhs: subtree(:rhs)) { Assign[[id, rhs]] }
+
       rule(op: simple(:op), r: simple(:rhs)) { Operation[[op, rhs]] }
 
       # unwrap/pass through???
@@ -16,9 +19,17 @@ module Gamma
       rule(func: simple(:method), arglist: subtree(:arglist)) {
         args = TransformHelper
           .normalize_list(arglist)
-          .map { |a| a[:arg] }
+          .map { |it| it[:arg] }
 
         Funcall[[ method, args ]]
+      }
+
+      rule(expr_list: subtree(:stmts)) {
+        expression_list = TransformHelper
+          .normalize_list(stmts)
+          .map { |it| it[:stmt] }
+
+        Sequence[expression_list]
       }
 
       rule(sequence(:seq)) { Sequence[seq] }
