@@ -58,7 +58,7 @@ module Gamma
           )
         when Assign then
           id, rhs = *ast_node.contents
-          derive_commands(rhs, destination_register: id)
+          derive_commands(rhs, destination_register: id.to_s)
         when Funcall then
           derive_funcall(
             ast_node,
@@ -103,12 +103,12 @@ module Gamma
 
         # lookup builtins
         if vm.builtin?(method)
-          cmds.push(vm.call_builtin(method, reified_arg_tmp_rs))
-
-          return cmds
+          cmds.push(vm.call_builtin(method, reified_arg_tmp_rs, destination_register))
         else
-          cmds.push(vm.call_udf(method, reified_arg_tmp_rs))
+          cmds.push(vm.call_udf(method, reified_arg_tmp_rs, destination_register))
         end
+
+        return cmds
       end
 
       # temp helper?

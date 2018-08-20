@@ -33,18 +33,17 @@ module Gamma
         div_command(dest, left, right)
       end
 
-      def call_builtin(method, arglist)
-        call_builtin_command(method, arglist)
+      def call_builtin(method, arglist, dest)
+        call_builtin_command(method, arglist, dest)
       end
 
       def defun(method, arglist, statements)
         define_function_command(method, arglist, statements)
       end
 
-      def call_udf(method, arglist)
-        call_user_defined_function_command(method, arglist)
+      def call_udf(method, arglist, dest)
+        call_user_defined_function_command(method, arglist, dest)
       end
-
 
       private
       include Commands
@@ -85,16 +84,16 @@ module Gamma
         Copy[[dst, src]]
       end
 
-      def call_builtin_command(method, arglist)
-        CallBuiltin[[method, arglist]]
-      end
-
       def define_function_command(method, arglist, statements)
         DefineFunction[[method, arglist, statements]]
       end
 
-      def call_user_defined_function_command(method, arglist)
-        CallUserDefinedFunction[[method, arglist]]
+      def call_builtin_command(method, arglist, dest)
+        CallBuiltin[[method, arglist, dest]]
+      end
+
+      def call_user_defined_function_command(method, arglist, dest)
+        CallUserDefinedFunction[[method, arglist, dest]]
       end
     end
   end

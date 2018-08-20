@@ -64,10 +64,8 @@ describe Lang do
     end
 
     it 'should define functions' do
-      # expect(geval('square = x -> x * 2; square(2)')).to eq(GInt[4])
-      # first: square = x -> x * 2
-      # now: 'square=(x)->x*2'
       expect(geval('square = (x) -> x * 2; square(2)')).to eq(GInt[4])
+      expect(geval('square = (x) -> x * 2; square(square(4))')).to eq(GInt[16])
     end
   end
 end

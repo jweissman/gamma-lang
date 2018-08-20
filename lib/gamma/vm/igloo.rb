@@ -36,7 +36,7 @@ module Gamma
 
 
       def copy(dst, src)
-        store_dictionary_key(dst, store.get({ key: src.to_s }))
+        store_dictionary_key(dst.to_s, store.get({ key: src.to_s }))
       end
 
       def put_anonymous_register(val)
@@ -69,17 +69,19 @@ module Gamma
         three_register_op('/', dest, left, right)
       end
 
-      def call_builtin(method_name, arg_registers)
+      def call_builtin(method_name, arg_registers, dst)
         args = arg_registers.map do |key|
           store.get({ key: key })
         end
 
         meth = BUILTIN_METHODS[method_name.to_sym]
 
-        Result[
-          meth.call(*args),
-          "Executed builtin method #{method_name}"
-        ]
+        store_dictionary_key(dst, meth.call(*args))
+
+        # Result[
+        #   meth.call(*args),
+        #   "Executed builtin method #{method_name}"
+        # ]
       end
 
       def define_function(method_name, arg_list, statements)
@@ -92,14 +94,16 @@ module Gamma
       end
 
       # invoke udf by name, with arg registers in an array
-      def call_user_defined_function(method_name, arg_registers)
+      def call_user_defined_function(method_name, arg_registers, dst)
         meth = store.get({ key: method_name })
 
         raise "#{method_name} is not a GFunction!" unless meth.is_a?(GFunction)
 
         arg_values = arg_registers.map do |key|
-          store.get({ key: key })
+          store.get({ key: key.to_s })
         end
+
+        # binding.pry # if arg_values.any? { |val| val.is_a?(GNothing) }
 
         new_frame_vars = meth.arglist.zip(arg_values)
 
@@ -113,11 +117,23 @@ module Gamma
             store.set({ key: key, value: val })
           end
 
+          # binding.pry
+
           # execute statements
           meth.statements.each do |stmt|
             res = handle(stmt)
+          # rescue => ex
+          #   binding.pry
           end
         end
+
+        # copy res into _? (it's already there, we broke grabbin params!)
+        # we lost it though!
+        # binding.pry
+
+        # put_anonymous_register(res.ret_value)
+        store_dictionary_key(dst, res.ret_value) #meth.call(*args))
+        # binding.pry
 
         res
       end
