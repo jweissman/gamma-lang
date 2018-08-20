@@ -50,8 +50,7 @@ jobs:
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-            COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN
-            bundle exec rspec --format progress \
+            COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
