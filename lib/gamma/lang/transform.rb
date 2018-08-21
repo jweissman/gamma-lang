@@ -16,6 +16,18 @@ module Gamma
       # unwrap/pass through???
       rule(l: simple(:lhs)) { lhs }
 
+      rule(defun: simple(:method), arglist: subtree(:arglist), body: subtree(:stmts)) {
+        args = TransformHelper
+          .normalize_list(arglist)
+          .map { |it| it[:arg] }
+
+        Defun[[
+          method,
+          args,
+          stmts
+        ]]
+      }
+
       rule(func: simple(:method), arglist: subtree(:arglist)) {
         args = TransformHelper
           .normalize_list(arglist)

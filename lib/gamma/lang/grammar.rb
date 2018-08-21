@@ -40,7 +40,7 @@ module Gamma
       #
 
       rule(:defun) do
-        ident.as(:defun) >> tuple.as(:arglist) >> block.as(:body) >> space?
+        ident.as(:defun) >> tuple >> block.as(:body) >> space?
       end
 
       rule(:fn_lit) do
