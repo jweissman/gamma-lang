@@ -8,16 +8,18 @@ module Gamma
       #
       root(:expression_list)
 
-      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim.repeat >> space? >> expr.as(:stmt) >> stmt_delim.repeat).repeat(1)).as(:expr_list) |
-                               expr >> stmt_delim.repeat }
+      rule(:expression_list) do
+        (expr.as(:stmt) >> (delim.repeat >> space? >> expr.as(:stmt) >> delim.repeat).repeat(1)).as(:expr_list) |
+          expr >> delim.repeat
+      end
 
       rule(:expr) { funcall |
                     eq_exp  |
                     add_exp |
                     value }
 
-      rule(:stmt_delim) { semicolon |
-                          match["\n"] }
+      rule(:delim) { semicolon |
+                     match["\n"] }
 
       #
       # arithmetic rules
@@ -62,7 +64,7 @@ module Gamma
       # grammar parts
       #
 
-      rule(:subexpression) { lparens >> expr >> rparens >> space? }
+      rule(:subexpression) { lparens >> space? >> expression_list >> space? >> rparens >> space? }
 
       rule(:value)    { integer |
                         ident |

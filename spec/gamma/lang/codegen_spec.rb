@@ -35,9 +35,9 @@ describe Gamma::Lang::Codegen do
     end
 
     it 'assigns values' do
-      actual = subject.derive(Assign[[:xy, IntLiteral[10]]])
+      actual = subject.derive(Assign[['xy', IntLiteral[10]]])
       expected = [StoreDictionaryKey[['xy', GInt[10]]]]
-      # binding.pry
+
       expect(actual).to eq(expected)
     end
 

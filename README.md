@@ -14,9 +14,13 @@ A tiny language I'm learning to build!
   - [x] Arithmetic (`*/+-`)
   - [x] Variables (Assignment with `=`)
   - [x] Builtin and (Simple) User-defined Functions
-  - [ ] Multi-line UDFs
+  - [~] Multi-line UDFs
+  - [ ] String literals
+  - [ ] Path literal
   - [ ] Collections (Lists, Hashes)
+  - [ ] IEEE Floating-point type
   - [ ] Modules
+  - [ ] Typechecking
 
 ## Command-line Usage
 

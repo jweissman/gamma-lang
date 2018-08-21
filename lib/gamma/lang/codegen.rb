@@ -58,7 +58,7 @@ module Gamma
           )
         when Assign then
           id, rhs = *ast_node.contents
-          derive_commands(rhs, destination_register: id.to_s)
+          derive_commands(rhs, destination_register: id)
         when Funcall then
           derive_funcall(
             ast_node,
