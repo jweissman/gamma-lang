@@ -70,7 +70,7 @@ describe Lang do
       expect(geval('square = (x) -> x * 2; square(square(4))')).to eq(GInt[16])
     end
 
-    xit 'should define and use (multi-line) funcs' do
+    it 'should define and use (multi-line) funcs' do
       expect(geval('square(x) { puts(x); x * x }; square(2)')).to eq(GInt[4])
     end
   end

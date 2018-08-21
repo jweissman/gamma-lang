@@ -64,6 +64,11 @@ module Gamma
             ast_node,
             destination_register: destination_register
           )
+        when Defun then
+          derive_defun(
+            ast_node,
+            destination_register: destination_register
+          )
         else
           raise "Implement commands for node type #{ast_node.class.name.split('::').last}"
         end
@@ -109,6 +114,18 @@ module Gamma
         end
 
         return cmds
+      end
+
+      def derive_defun(ast_node, destination_register:)
+        method, args, body = *ast_node.contents
+        # could just assign, but we may want some kind of different scope on the function?
+        name = method.contents.to_s
+        derived_body = derive_commands(body, destination_register: underscore_reg)
+        vm_func = VM::BuiltinTypes::GFunction[args.map(&:contents), derived_body]
+        [
+          vm.store(name, vm_func),
+          vm.store(destination_register, name),
+        ]
       end
 
       # temp helper?

@@ -96,5 +96,40 @@ describe Gamma::Lang::Codegen do
         CallBuiltin[['puts', ['t1'], tmp]]
       ])
     end
+
+    it 'derives defun' do
+      ast = Defun[[
+          Ident[:square],
+          [Ident[:x]],
+          Sequence[[
+            Funcall[[Ident[:puts], [Ident[:x]]]],
+            Sequence[[Ident[:x], Operation[["*", Ident[:x]]]]]
+          ]]
+        ]]
+
+      commands = subject.derive ast
+
+      expect(commands.first).to be_a(StoreDictionaryKey)
+
+      expect(commands.first.payload[0]).to eq('square')
+      fn = commands.first.payload[1]
+      expect(fn).to be_a(GFunction)
+      expect(fn.arglist).to eq([:x])
+
+      # expect(fn.statements[0]).to eq(Copy[['t1', :x]])
+      # binding.pry
+      # expect(fn.statements[1]).to eq(CallBuiltin[['puts', ['t1'], tmp]])
+      expect(fn.statements).to eq([
+        Copy[['t1',:x]],
+        CallBuiltin[['puts',['t1'],tmp]],
+        Copy[[tmp,:x]],
+        Copy[['t2',:x]],
+        Mult[[tmp,tmp,'t2']],
+      ])
+
+      expect(commands[1]).to eq(
+        StoreDictionaryKey[['_', 'square']]
+      )
+    end
   end
 end
