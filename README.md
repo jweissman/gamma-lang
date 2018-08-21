@@ -22,6 +22,15 @@ A tiny language I'm learning to build!
   - [ ] Modules
   - [ ] Typechecking
 
+## Syntax Primer
+
+A brief primer on Gamma.
+
+    Variable assignment: `x = 1; y = 2`
+    Function literals: `double = (x) -> x * 2`
+    Calling functions: `puts(double(x))` [using builtin `puts`]
+    Named functions/blocks: `square(x) { x * x }`
+
 ## Command-line Usage
 
 The `gamma` command-line helper has a few tools already

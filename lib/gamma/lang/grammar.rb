@@ -13,7 +13,8 @@ module Gamma
           expr >> delim.repeat
       end
 
-      rule(:expr) { funcall |
+      rule(:expr) { defun |
+                    funcall |
                     eq_exp  |
                     add_exp |
                     value }
@@ -37,6 +38,10 @@ module Gamma
       #
       # assignment / variables
       #
+
+      rule(:defun) do
+        ident.as(:defun) >> tuple.as(:arglist) >> block.as(:body) >> space?
+      end
 
       rule(:fn_lit) do
         tuple >> arrow >> expr.as(:body)
@@ -64,6 +69,8 @@ module Gamma
       # grammar parts
       #
 
+      rule(:block) { lcurly >> space? >> expression_list >> space? >> rcurly >> space? }
+
       rule(:subexpression) { lparens >> space? >> expression_list >> space? >> rparens >> space? }
 
       rule(:value)    { integer |
@@ -86,6 +93,8 @@ module Gamma
       rule(:digit)      { match['0-9'] }
       rule(:lparens)    { match['('] }
       rule(:rparens)    { match[')'] }
+      rule(:lcurly)    { match['{'] }
+      rule(:rcurly)    { match['}'] }
       rule(:alpha)      { match['a-zA-Z'] }
       rule(:underscore) { match['_'] }
       rule(:comma)      { match[','] }

@@ -112,11 +112,15 @@ describe Gamma::Lang::Parser do
     it 'parses (short) fn lit' do
       fun_lit = '(x)->x*2'
       expect(parser).to parse(fun_lit)
-      p parser.parse(fun_lit)
     end
 
     it 'should parse short fn lit assignment' do
-      defun = 'square = (x) -> x * 2'
+      fn_lit_assign = 'square = (x) -> x * 2'
+      expect(parser).to parse(fn_lit_assign)
+    end
+
+    it 'should parse long defun' do
+      defun = 'square(x) { puts(x); x * x }'
       expect(parser).to parse(defun)
       p parser.parse(defun)
     end
