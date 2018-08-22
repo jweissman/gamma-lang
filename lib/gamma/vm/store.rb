@@ -14,7 +14,6 @@ module Gamma
 
       def merge(other_store)
         raise "Can only merge stores" unless other_store.is_a?(Store)
-        # binding.pry
         Store[
           other_store.entries.merge(entries)
         ]

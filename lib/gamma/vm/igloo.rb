@@ -73,20 +73,11 @@ module Gamma
         args = arg_registers.map do |key|
           store.get({ key: key })
         end
-
         meth = BUILTIN_METHODS[method_name.to_sym]
-
         store_dictionary_key(dst, meth.call(*args))
-
-        # Result[
-        #   meth.call(*args),
-        #   "Executed builtin method #{method_name}"
-        # ]
       end
 
       def define_function(method_name, arg_list, statements)
-        # puts "+==== Define FUNCTION #{method_name}"
-        # we want to capture a 'binding' with the current frame
         local_binding = current_frame.entries.clone #dup
         fn = GFunction[method_name, arg_list, statements, local_binding]
         store_dictionary_key(method_name, fn)
@@ -101,9 +92,7 @@ module Gamma
       def call_user_defined_function(method_name, arg_registers, dst)
         meth = store.get({ key: method_name })
 
-        # binding.pry
         unless meth.is_a?(GFunction)
-          # binding.pry
           raise "#{method_name} is not a GFunction!"
         end
 
@@ -162,8 +151,7 @@ module Gamma
 
       private
       def store
-        current_frame #[:store]
-        # @store ||= Store.new({})
+        current_frame
       end
 
       def current_frame
@@ -176,8 +164,9 @@ module Gamma
 
       def with_new_frame(overrides={})
         old_frame = @frame
-        @frame = base_frame.merge(old_frame).merge(Store.new(overrides))
-        # @frame = @frame.merge(Store.new(overrides))
+        @frame = base_frame.
+          merge(old_frame).
+          merge(Store.new(overrides))
         result = yield
         @frame = old_frame
         result
