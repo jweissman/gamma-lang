@@ -108,18 +108,17 @@ describe Gamma::Lang::Codegen do
         ]]
 
       commands = subject.derive ast
+      defun_command = commands.first
 
-      expect(commands.first).to be_a(StoreDictionaryKey)
+      expect(defun_command).to be_a(DefineFunction)
 
-      expect(commands.first.payload[0]).to eq('square')
-      fn = commands.first.payload[1]
-      expect(fn).to be_a(GFunction)
-      expect(fn.arglist).to eq([:x])
+      expect(defun_command.payload[0]).to eq('square')
+      arglist = defun_command.payload[1]
+      expect(arglist).to be_a(Array)
+      expect(arglist).to eq([:x])
 
-      # expect(fn.statements[0]).to eq(Copy[['t1', :x]])
-      # binding.pry
-      # expect(fn.statements[1]).to eq(CallBuiltin[['puts', ['t1'], tmp]])
-      expect(fn.statements).to eq([
+      statements = defun_command.payload[2]
+      expect(statements).to eq([
         Copy[['t1',:x]],
         CallBuiltin[['puts',['t1'],tmp]],
         Copy[[tmp,:x]],

@@ -10,10 +10,22 @@ puts(square(val))
 puts(double(square(val)))
 puts(square(double(val)))
 
-say = (x) -> (
-  puts(x);
-  puts(x);
-  puts(x);
-)
+make_say(x) {
+  puts(4)
+  puts(x)
+  f0 = () -> {
+    puts(3)
+    puts(x)
+  }
+  puts(f0)
+  f0
+}
 
-say(100001)
+twice(f) {
+  puts(f, 1)
+  f()
+  puts(f, 2)
+  f()
+}
+
+twice(make_say(1234))

@@ -40,10 +40,14 @@ module Gamma
           ]
         when FunLiteral then
           args, body = *ast_node.contents
-          derived_body = derive_commands(body, destination_register: underscore_reg)
-          vm_func = VM::BuiltinTypes::GFunction[args.map(&:contents), derived_body]
+          statements = derive_commands(body, destination_register: underscore_reg)
+          arglist = args.map(&:contents)
+          # tmp_lambda = '.tmp__lambda'
+          # vm_func = VM::BuiltinTypes::GFunction[args.map(&:contents), derived_body]
           [
-            vm.store(destination_register, vm_func)
+            vm.defun(destination_register, arglist, statements),
+            # todo alternate store for funcs -- grab surroudning binding/ctx?
+            # vm.store(destination_register, tmp_lambda)
           ]
         when Sequence then
           # seq_target -- use dst as working register
@@ -120,10 +124,12 @@ module Gamma
         method, args, body = *ast_node.contents
         # could just assign, but we may want some kind of different scope on the function?
         name = method.contents.to_s
-        derived_body = derive_commands(body, destination_register: underscore_reg)
-        vm_func = VM::BuiltinTypes::GFunction[args.map(&:contents), derived_body]
+        arglist = args.map(&:contents)
+        statements = derive_commands(body, destination_register: underscore_reg)
+        # vm_func = VM::BuiltinTypes::GFunction[args.map(&:contents), derived_body]
         [
-          vm.store(name, vm_func),
+          vm.defun(name, arglist, statements),
+          # vm.store(name, vm_func),
           vm.store(destination_register, name),
         ]
       end

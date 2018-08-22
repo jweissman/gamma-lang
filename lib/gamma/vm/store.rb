@@ -1,3 +1,4 @@
+require 'pry'
 module Gamma
   module VM
     class Store < Struct.new(:entries)
@@ -9,6 +10,14 @@ module Gamma
 
       def get(key:)
         entries[key.to_sym] || GNothing[]
+      end
+
+      def merge(other_store)
+        raise "Can only merge stores" unless other_store.is_a?(Store)
+        # binding.pry
+        Store[
+          other_store.entries.merge(entries)
+        ]
       end
     end
   end

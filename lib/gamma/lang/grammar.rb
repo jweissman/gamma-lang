@@ -13,11 +13,13 @@ module Gamma
           expr >> delim.repeat
       end
 
-      rule(:expr) { defun |
-                    funcall |
-                    eq_exp  |
-                    add_exp |
-                    value }
+      rule(:expr) do
+        defun |
+          funcall |
+          eq_exp  |
+          add_exp |
+          value
+      end
 
       rule(:delim) { semicolon |
                      match["\n"] }
@@ -44,7 +46,8 @@ module Gamma
       end
 
       rule(:fn_lit) do
-        tuple >> arrow >> expr.as(:body)
+        tuple >> arrow >> expr.as(:body) |
+          tuple >> arrow >> block.as(:body)
       end
 
       rule(:arrow) { match['-'] >> match['>'] >> space? }
@@ -59,6 +62,10 @@ module Gamma
 
       rule(:funcall) do
         ident.as(:func) >> tuple
+      end
+
+      rule(:calm_funcall) do
+        ident.as(:func) >> space? >> arglist.maybe.as(:arglist) >> space?
       end
 
       rule(:tuple) { lparens >> arglist.maybe.as(:arglist) >> rparens >> space? }

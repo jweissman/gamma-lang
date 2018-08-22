@@ -85,10 +85,14 @@ module Gamma
       end
 
       def define_function(method_name, arg_list, statements)
-        store_dictionary_key(method_name, GFunction[arg_list, statements])
+        # puts "+==== Define FUNCTION #{method_name}"
+        # we want to capture a 'binding' with the current frame
+        local_binding = current_frame.entries.clone #dup
+        fn = GFunction[method_name, arg_list, statements, local_binding]
+        store_dictionary_key(method_name, fn)
 
         Result[
-          method_name,
+          fn,
           "Defined method #{method_name}"
         ]
       end
@@ -97,13 +101,15 @@ module Gamma
       def call_user_defined_function(method_name, arg_registers, dst)
         meth = store.get({ key: method_name })
 
-        raise "#{method_name} is not a GFunction!" unless meth.is_a?(GFunction)
+        # binding.pry
+        unless meth.is_a?(GFunction)
+          # binding.pry
+          raise "#{method_name} is not a GFunction!"
+        end
 
         arg_values = arg_registers.map do |key|
           store.get({ key: key.to_s })
         end
-
-        # binding.pry # if arg_values.any? { |val| val.is_a?(GNothing) }
 
         new_frame_vars = meth.arglist.zip(arg_values)
 
@@ -111,31 +117,19 @@ module Gamma
         # execute meth.statements, with a new context/store that is JUST args
         #
         res = GNothing[]
-        with_new_frame do
+        with_new_frame(meth.binding) do
           # set args
           new_frame_vars.map do |key, val|
             store.set({ key: key, value: val })
           end
 
-          # binding.pry
-
           # execute statements
           meth.statements.each do |stmt|
             res = handle(stmt)
-          # rescue => ex
-          #   binding.pry
           end
         end
 
-        # copy res into _? (it's already there, we broke grabbin params!)
-        # we lost it though!
-        # binding.pry
-
-        # put_anonymous_register(res.ret_value)
-        store_dictionary_key(dst, res.ret_value) #meth.call(*args))
-        # binding.pry
-
-        res
+        store_dictionary_key(dst, res.ret_value)
       end
 
       protected
@@ -168,7 +162,7 @@ module Gamma
 
       private
       def store
-        current_frame[:store]
+        current_frame #[:store]
         # @store ||= Store.new({})
       end
 
@@ -177,14 +171,13 @@ module Gamma
       end
 
       def base_frame
-        {
-          store: Store.new({})
-        }
+        Store.new({})
       end
 
-      def with_new_frame
+      def with_new_frame(overrides={})
         old_frame = @frame
-        @frame = base_frame
+        @frame = base_frame.merge(old_frame).merge(Store.new(overrides))
+        # @frame = @frame.merge(Store.new(overrides))
         result = yield
         @frame = old_frame
         result

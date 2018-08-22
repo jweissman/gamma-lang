@@ -15,9 +15,10 @@ A tiny language I'm learning to build!
   - [x] Variables (Assignment with `=`)
   - [x] Builtin and (Simple) User-defined Functions
   - [~] Multi-line UDFs
+  - [ ] Collections (Lists, Hashes)
   - [ ] String literals
   - [ ] Path literal
-  - [ ] Collections (Lists, Hashes)
+  - [ ] Comment
   - [ ] IEEE Floating-point type
   - [ ] Modules
   - [ ] Typechecking
