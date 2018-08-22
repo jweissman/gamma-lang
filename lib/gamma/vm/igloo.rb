@@ -14,7 +14,6 @@ module Gamma
       include BuiltinTypes
 
       def defined?(key)
-        # binding.pry
         store.get({ key: key }) != GNothing[]
       end
 
@@ -78,7 +77,7 @@ module Gamma
       end
 
       def define_function(method_name, arg_list, statements)
-        local_binding = current_frame.entries.clone #dup
+        local_binding = current_frame.entries.clone
         fn = GFunction[method_name, arg_list, statements, local_binding]
         store_dictionary_key(method_name, fn)
 
@@ -102,9 +101,6 @@ module Gamma
 
         new_frame_vars = meth.arglist.zip(arg_values)
 
-        #
-        # execute meth.statements, with a new context/store that is JUST args
-        #
         res = GNothing[]
         with_new_frame(meth.binding) do
           # set args
