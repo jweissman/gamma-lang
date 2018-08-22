@@ -14,7 +14,7 @@ A tiny language I'm learning to build!
   - [x] Arithmetic (`*/+-`)
   - [x] Variables (Assignment with `=`)
   - [x] Builtin and (Simple) User-defined Functions
-  - [~] Multi-line UDFs
+  - [x] Multi-line UDFs
   - [ ] Collections (Lists, Hashes)
   - [ ] String literals
   - [ ] Path literal
