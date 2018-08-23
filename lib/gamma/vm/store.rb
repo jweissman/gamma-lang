@@ -1,4 +1,3 @@
-require 'pry'
 module Gamma
   module VM
     class Store < Struct.new(:entries)
