@@ -1,6 +1,7 @@
 square = (x) -> x * x
 double = (x) -> 2 * x
 
+
 val = 123
 
 puts(val)
@@ -8,3 +9,18 @@ puts(double(val))
 puts(square(val))
 puts(double(square(val)))
 puts(square(double(val)))
+
+make_say(x) {
+  f0 = () -> {
+    puts(x)
+  }
+  f0
+}
+
+twice(f) {
+  f()
+  f()
+}
+
+twice(make_say(1234))
+twice(make_say(8901))

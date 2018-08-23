@@ -139,4 +139,30 @@ describe Gamma::Lang::Transform do
       )
     end
   end
+
+  describe 'named functions' do
+    it 'transforms defun' do
+      tree = {
+        defun: { :id=>"square" },
+        arglist: {:arg=>{:id=>"x"}},
+        body: {
+          expr_list: [
+            {:stmt=>{:func=>{:id=>"puts"}, :arglist=>{:arg=>{:id=>"x"}}}},
+            {:stmt=>[{:l=>{:id=>"x"}}, {:op=>"*", :r=>{:id=>"x"}}]}
+          ]
+        }
+      }
+
+      expect(subject).to transform(tree).into(
+        Defun[[
+          Ident[:square],
+          [Ident[:x]],
+          Sequence[[
+            Funcall[[Ident[:puts], [Ident[:x]]]],
+            Sequence[[Ident[:x], Operation[["*", Ident[:x]]]]]
+          ]]
+        ]]
+      )
+    end
+  end
 end

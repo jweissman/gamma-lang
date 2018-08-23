@@ -35,9 +35,9 @@ describe Gamma::Lang::Codegen do
     end
 
     it 'assigns values' do
-      actual = subject.derive(Assign[[:xy, IntLiteral[10]]])
+      actual = subject.derive(Assign[['xy', IntLiteral[10]]])
       expected = [StoreDictionaryKey[['xy', GInt[10]]]]
-      # binding.pry
+
       expect(actual).to eq(expected)
     end
 
@@ -95,6 +95,40 @@ describe Gamma::Lang::Codegen do
         StoreDictionaryKey[['t1', GInt[1]]],
         CallBuiltin[['puts', ['t1'], tmp]]
       ])
+    end
+
+    it 'derives defun' do
+      ast = Defun[[
+          Ident[:square],
+          [Ident[:x]],
+          Sequence[[
+            Funcall[[Ident[:puts], [Ident[:x]]]],
+            Sequence[[Ident[:x], Operation[["*", Ident[:x]]]]]
+          ]]
+        ]]
+
+      commands = subject.derive ast
+      defun_command = commands.first
+
+      expect(defun_command).to be_a(DefineFunction)
+
+      expect(defun_command.payload[0]).to eq('square')
+      arglist = defun_command.payload[1]
+      expect(arglist).to be_a(Array)
+      expect(arglist).to eq([:x])
+
+      statements = defun_command.payload[2]
+      expect(statements).to eq([
+        Copy[['t1',:x]],
+        CallBuiltin[['puts',['t1'],tmp]],
+        Copy[[tmp,:x]],
+        Copy[['t2',:x]],
+        Mult[[tmp,tmp,'t2']],
+      ])
+
+      expect(commands[1]).to eq(
+        StoreDictionaryKey[['_', 'square']]
+      )
     end
   end
 end

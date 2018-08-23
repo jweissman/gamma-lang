@@ -19,8 +19,6 @@ module Gamma
 
       def defined?(method)
         true
-        # machine.defined?(method)
-        # binding.pry
       end
 
       protected

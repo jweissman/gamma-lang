@@ -8,16 +8,21 @@ module Gamma
       #
       root(:expression_list)
 
-      rule(:expression_list) { (expr.as(:stmt) >> (stmt_delim.repeat >> space? >> expr.as(:stmt) >> stmt_delim.repeat).repeat(1)).as(:expr_list) |
-                               expr >> stmt_delim.repeat }
+      rule(:expression_list) do
+        (expr.as(:stmt) >> (delim.repeat >> space? >> expr.as(:stmt) >> delim.repeat).repeat(1)).as(:expr_list) |
+          expr >> delim.repeat
+      end
 
-      rule(:expr) { funcall |
-                    eq_exp  |
-                    add_exp |
-                    value }
+      rule(:expr) do
+        defun |
+          funcall |
+          eq_exp  |
+          add_exp |
+          value
+      end
 
-      rule(:stmt_delim) { semicolon |
-                          match["\n"] }
+      rule(:delim) { semicolon |
+                     match["\n"] }
 
       #
       # arithmetic rules
@@ -36,8 +41,13 @@ module Gamma
       # assignment / variables
       #
 
+      rule(:defun) do
+        ident.as(:defun) >> tuple >> block.as(:body) >> space?
+      end
+
       rule(:fn_lit) do
-        tuple >> arrow >> expr.as(:body)
+        tuple >> arrow >> expr.as(:body) |
+          tuple >> arrow >> block.as(:body)
       end
 
       rule(:arrow) { match['-'] >> match['>'] >> space? }
@@ -54,6 +64,10 @@ module Gamma
         ident.as(:func) >> tuple
       end
 
+      rule(:calm_funcall) do
+        ident.as(:func) >> space? >> arglist.maybe.as(:arglist) >> space?
+      end
+
       rule(:tuple) { lparens >> arglist.maybe.as(:arglist) >> rparens >> space? }
 
       rule(:arglist) { expr.as(:arg) >> (comma >> space? >> expr.as(:arg)).repeat >> space? }
@@ -62,7 +76,9 @@ module Gamma
       # grammar parts
       #
 
-      rule(:subexpression) { lparens >> expr >> rparens >> space? }
+      rule(:block) { lcurly >> space? >> expression_list >> space? >> rcurly >> space? }
+
+      rule(:subexpression) { lparens >> space? >> expression_list >> space? >> rparens >> space? }
 
       rule(:value)    { integer |
                         ident |
@@ -84,6 +100,8 @@ module Gamma
       rule(:digit)      { match['0-9'] }
       rule(:lparens)    { match['('] }
       rule(:rparens)    { match[')'] }
+      rule(:lcurly)    { match['{'] }
+      rule(:rcurly)    { match['}'] }
       rule(:alpha)      { match['a-zA-Z'] }
       rule(:underscore) { match['_'] }
       rule(:comma)      { match[','] }

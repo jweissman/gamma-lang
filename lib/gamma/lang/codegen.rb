@@ -40,10 +40,10 @@ module Gamma
           ]
         when FunLiteral then
           args, body = *ast_node.contents
-          derived_body = derive_commands(body, destination_register: underscore_reg)
-          vm_func = VM::BuiltinTypes::GFunction[args.map(&:contents), derived_body]
+          statements = derive_commands(body, destination_register: underscore_reg)
+          arglist = args.map(&:contents)
           [
-            vm.store(destination_register, vm_func)
+            vm.defun(destination_register, arglist, statements),
           ]
         when Sequence then
           # seq_target -- use dst as working register
@@ -58,9 +58,14 @@ module Gamma
           )
         when Assign then
           id, rhs = *ast_node.contents
-          derive_commands(rhs, destination_register: id.to_s)
+          derive_commands(rhs, destination_register: id)
         when Funcall then
           derive_funcall(
+            ast_node,
+            destination_register: destination_register
+          )
+        when Defun then
+          derive_defun(
             ast_node,
             destination_register: destination_register
           )
@@ -73,8 +78,6 @@ module Gamma
         op, r = *ast_node.contents
         cmds = []
 
-        # this recursion is interesting too, it's mutually recursive with sequence
-        # in a way that confuses our register targeting
         tmp_r = make_temp_id
         cmds += derive_commands(r, destination_register: tmp_r)
 
@@ -109,6 +112,17 @@ module Gamma
         end
 
         return cmds
+      end
+
+      def derive_defun(ast_node, destination_register:)
+        method, args, body = *ast_node.contents
+        name = method.contents.to_s
+        arglist = args.map(&:contents)
+        statements = derive_commands(body, destination_register: underscore_reg)
+        [
+          vm.defun(name, arglist, statements),
+          vm.store(destination_register, name),
+        ]
       end
 
       # temp helper?

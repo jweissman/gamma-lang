@@ -3,7 +3,7 @@ module Gamma
     module Commands
       class Command < Struct.new(:payload)
         def inspect
-          "CMD:#{self.class.name.split('::').last}(#{payload.join(',')})"
+          "#{self.class.name.split('::').last}(#{payload.join(',')})"
         end
       end
 

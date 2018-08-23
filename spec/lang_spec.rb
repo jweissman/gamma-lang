@@ -70,6 +70,27 @@ describe Lang do
       expect(geval('square = (x) -> x * 2; square(square(4))')).to eq(GInt[16])
     end
 
-    xit 'should define and use (multi-line) funcs'
+    it 'should define and use (multi-line) funcs' do
+      expect(geval('square(x) { puts(x); x * x }; square(2)')).to eq(GInt[4])
+    end
+
+    it 'should give functions scope' do
+      expect(geval('a=4; plus_a(x) { puts(x); x + a }; plus_a(2)')).to eq(GInt[6])
+    end
+
+    it 'should capture function binding' do
+      expect(geval(
+        <<~gamma
+          self_compose(f) {
+            (x) -> { f(f(x)) }
+          }
+
+          cube = (x) -> x * x * x
+
+          cubed_cube = self_compose(cube)
+          cubed_cube(3)
+        gamma
+      )).to eq(GInt[19683]) # 27 ^ 3
+    end
   end
 end

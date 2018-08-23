@@ -15,9 +15,9 @@ module Gamma
         end
       end
 
-      GFunction = Struct.new(:arglist, :statements) do
+      GFunction = Struct.new(:name, :arglist, :statements, :binding) do
         def inspect
-          "(lambda)"
+          "#{name}()"
         end
       end
     end

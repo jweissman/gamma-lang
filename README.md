@@ -14,9 +14,23 @@ A tiny language I'm learning to build!
   - [x] Arithmetic (`*/+-`)
   - [x] Variables (Assignment with `=`)
   - [x] Builtin and (Simple) User-defined Functions
-  - [ ] Multi-line UDFs
+  - [x] Multi-line UDFs
   - [ ] Collections (Lists, Hashes)
+  - [ ] String literals
+  - [ ] Path literal
+  - [ ] Comment
+  - [ ] IEEE Floating-point type
   - [ ] Modules
+  - [ ] Typechecking
+
+## Syntax Primer
+
+A brief primer on Gamma.
+
+    Variable assignment: `x = 1; y = 2`
+    Function literals: `double = (x) -> x * 2`
+    Calling functions: `puts(double(x))` [using builtin `puts`]
+    Named functions/blocks: `square(x) { x * x }`
 
 ## Command-line Usage
 
